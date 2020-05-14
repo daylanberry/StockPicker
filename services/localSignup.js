@@ -4,7 +4,7 @@ const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy;
 
 
-passport.use('local', new LocalStrategy({
+passport.use('local-signup', new LocalStrategy({
   usernameField: 'email',
   passwordField: 'password',
   passReqToCallback: true
@@ -14,12 +14,7 @@ passport.use('local', new LocalStrategy({
     User.findOne({email})
     .then(user => {
       if (user){
-
-        if (user.validPassword(password, user.password)) {
-          return done(null, user)
-        }
-
-        return done(null, false, {message: 'Invalid username/password'})
+        return done(null, false, req.flash( 'message', 'This email is already taken!'))
 
       } else {
           let newUser = new User()
@@ -33,8 +28,32 @@ passport.use('local', new LocalStrategy({
           })
         }
       })
-      .catch(err => done(err))
+      .catch(err => console.log(err))
   })
 )
+
+passport.use('local-login', new LocalStrategy({
+  usernameField: 'email',
+  passwordField: 'password',
+  passReqToCallback: true
+},
+  (req, email, password, done) => {
+
+    User.findOne({email})
+      .then(user => {
+        if (!user) {
+          return done(null, false, req.flash('loginMessage', 'No User Found'))
+        }
+
+        if (!user.validPassword(password, user.password)) {
+          return done(null, false, req.flash('loginMessage', 'Oops! Wrong password!'))
+        }
+
+        return done(null, user)
+      })
+    }
+  )
+)
+
 
 

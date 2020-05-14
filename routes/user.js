@@ -25,24 +25,22 @@ module.exports = (app) => {
   app.get('/api/currentUser', isLoggedIn, (req, res) => {
     res.send(req.user)
 
-  })
+  });
 
   app.get('/api/login', (req, res) => {
-    res.send(req.flash())
+    console.log(req)
+    res.send('login')
+
+  });
+
+  app.get('/api/signup', (req, res) => {
+    res.send('signup')
   })
 
   app.get('/api/logout', (req, res) => {
     req.logout()
     res.redirect('/')
   });
-
-  app.post('/api/login', passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/api/login',
-    failureFlash: true
-  }))
-
-
 
 }
 
