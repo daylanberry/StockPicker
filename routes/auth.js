@@ -18,13 +18,13 @@ module.exports = (app) => {
 
   app.post('/api/signup', passport.authenticate('local-signup', {
     successRedirect: '/',
-    failureRedirect: '/api/signup',
+    failureRedirect: '/api/login',
     failureFlash: true
   }))
 
   app.post('/api/login', passport.authenticate('local-login', {
     successRedirect: '/',
-    failureRedirect: '/api/signup',
+    failureRedirect: '/api/login',
     failureFlash: true
   }))
 

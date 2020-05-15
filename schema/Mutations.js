@@ -1,6 +1,7 @@
 const graphql = require('graphql')
 const userType = require('./types/userType')
 const axios = require('axios')
+const { login, googleSignIn, signUp } = require('./strategies.js')
 
 const { GraphQLObjectType, GraphQLString } = graphql
 
@@ -14,12 +15,36 @@ const Mutations = new GraphQLObjectType({
         req.logout()
       }
     },
-    signUp: {
+    login: {
       type: userType,
-      resolve(parent, args, req){
+      args: {
+        email: { type: GraphQLString },
+        password: { type: GraphQLString }
+      },
 
+      resolve(parent, {email, password}, req) {
+        return login({email, password, req})
       }
     },
+
+    googleSignIn: {
+      type: userType,
+      resolve(parent, args, req) {
+        return googleSignIn(req)
+      }
+    },
+
+    signup: {
+      type: userType,
+      args: {
+        name: { type: GraphQLString },
+        email: { type: GraphQLString },
+        password: { type: GraphQLString }
+      },
+      resolve(parent, {name, email, password}, req){
+        return signUp({name, email, password}, req)
+      }
+    }
 
   }
 })

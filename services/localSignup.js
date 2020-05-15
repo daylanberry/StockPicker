@@ -4,6 +4,16 @@ const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy;
 
 
+passport.serializeUser((user, cb) => {
+  cb(null, user)
+})
+
+passport.deserializeUser((userObj, cb) => {
+  cb(null, userObj)
+})
+
+
+
 passport.use('local-signup', new LocalStrategy({
   usernameField: 'email',
   passwordField: 'password',
@@ -14,7 +24,7 @@ passport.use('local-signup', new LocalStrategy({
     User.findOne({email})
     .then(user => {
       if (user){
-        return done(null, false, req.flash( 'message', 'This email is already taken!'))
+        return done(null, false, 'This email is already taken!')
 
       } else {
           let newUser = new User()
@@ -32,6 +42,7 @@ passport.use('local-signup', new LocalStrategy({
   })
 )
 
+
 passport.use('local-login', new LocalStrategy({
   usernameField: 'email',
   passwordField: 'password',
@@ -42,18 +53,18 @@ passport.use('local-login', new LocalStrategy({
     User.findOne({email})
       .then(user => {
         if (!user) {
-          return done(null, false, req.flash('loginMessage', 'No User Found'))
+          return done(null, false, 'Invalid credentials')
         }
 
         if (!user.validPassword(password, user.password)) {
-          return done(null, false, req.flash('loginMessage', 'Oops! Wrong password!'))
+          return done(null, false, 'Oops! Wrong password!')
         }
 
         return done(null, user)
       })
     }
   )
-)
+);
 
 
 

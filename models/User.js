@@ -1,20 +1,28 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken')
 const Schema = mongoose.Schema;
 
 var user = new Schema({
-  googleId: String,
-  username: String,
+  name: String,
   email: String,
-  password: String
+  password: String,
+  googleId: { type: String, unique: false }
 })
 
-user.methods.generateHash = (password) => {
-  return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
-}
+
+
+user.pre("save", function(next) {
+    if(!this.isModified("password")) {
+        return next();
+    }
+    this.password = bcrypt.hashSync(this.password, 10);
+    next();
+});
 
 user.methods.validPassword = (password, userPassword) => {
   return bcrypt.compareSync(password, userPassword)
 }
+
 
 module.exports = mongoose.model('User', user)

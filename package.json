@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "server": "nodemon server.js",
+    "client": "npm run start --prefix client1",
+    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
   },
   "keywords": [],
   "author": "",
@@ -14,6 +16,7 @@
     "axios": "^0.19.2",
     "bcrypt": "^4.0.1",
     "body-parser": "^1.19.0",
+    "concurrently": "^5.2.0",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.5",
     "cookie-session": "^1.4.0",
@@ -22,6 +25,7 @@
     "express-graphql": "^0.9.0",
     "express-session": "^1.17.1",
     "graphql": "^15.0.0",
+    "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.5.7",
     "mongoose": "^5.9.13",
     "nodemon": "^2.0.3",

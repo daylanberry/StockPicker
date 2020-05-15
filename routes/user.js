@@ -14,12 +14,11 @@ module.exports = (app) => {
   }
 
   const loggedOut = (req, res, next) => {
-    if (req.isUnauthenticate()) {
+    if (req.isUnauthenticated()) {
       return next()
     } else {
       res.redirect('/')
     }
-
   }
 
   app.get('/api/currentUser', isLoggedIn, (req, res) => {
@@ -28,13 +27,14 @@ module.exports = (app) => {
   });
 
   app.get('/api/login', (req, res) => {
-    console.log(req)
     res.send('login')
-
   });
 
-  app.get('/api/signup', (req, res) => {
-    res.send('signup')
+
+  app.get('/api/signup', loggedOut, (req, res) => {
+    res.send(req.user)
+
+
   })
 
   app.get('/api/logout', (req, res) => {

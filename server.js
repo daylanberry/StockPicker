@@ -28,13 +28,12 @@ app.use(
   })
 )
 
+app.get('/', (req, res) => {
+  res.send('hi')
+})
 
 app.use(passport.initialize())
 app.use(passport.session())
-
-app.get('/', (req, res) => {
-  res.send('hello')
-})
 
 
 require('./routes/auth.js')(app)
@@ -44,8 +43,6 @@ app.use('/graphql', expressGraphQL({
   graphiql: true,
   schema
 }))
-
-
 
 const PORT = process.env.PORT || 5010
 app.listen(PORT, () => console.log('Your live on port ' + PORT))
