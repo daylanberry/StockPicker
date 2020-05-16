@@ -40,6 +40,7 @@ passport.use(new GoogleStrategy({
           return done(null, user)
         }
       })
+
   }
 
 ))
@@ -52,7 +53,7 @@ const googleSignIn = (req) => {
       } else {
         req.login(user, () => resolve(user))
       }
-    })()
+    })
   })
 }
 

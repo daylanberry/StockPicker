@@ -8,6 +8,7 @@ const cookieSession = require('cookie-session')
 const cors = require('cors')
 const flash = require('connect-flash')
 const schema = require('./schema/schema.js')
+const session = require('express-session');
 
 mongoose.connect(`mongodb+srv://daylan:${keys.mongoURI}@cluster0-pqujg.mongodb.net/test?retryWrites=true&w=majority`, {useNewUrlParser: true})
 require('./models/User.js')
@@ -16,28 +17,29 @@ require('./services/google.js')
 
 const app = express()
 
-
 app.use(bodyParser.json())
-app.use(cors())
-app.use(flash())
+app.use('*', cors({ origin: 'http://localhost:3000', credentials: true }));
+
 
 app.use(
   cookieSession({
     maxAge: 30 * 24 * 60 * 60 * 1000,
-    keys: [keys.cookieKey]
+    keys: [keys.cookieKey],
   })
 )
 
-app.get('/', (req, res) => {
-  res.send('hi')
-})
+
+app.use(session({
+  saveUninitialized: true,
+  resave: true,
+  secret: 'verysecretsecret'
+}));
 
 app.use(passport.initialize())
 app.use(passport.session())
-
-
 require('./routes/auth.js')(app)
 require('./routes/user.js')(app)
+
 
 app.use('/graphql', expressGraphQL({
   graphiql: true,

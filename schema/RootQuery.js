@@ -2,6 +2,7 @@ const graphql = require('graphql')
 const userType = require('./types/userType')
 const mongoose = require('mongoose')
 const User = require('../models/User.js')
+const axios = require('axios')
 
 const { GraphQLObjectType, GraphQLString, GraphQLList } = graphql
 
@@ -10,12 +11,10 @@ const RootQuery = new GraphQLObjectType({
   fields: {
     currentUser: {
       type: userType,
-      args: { id: { type: GraphQLString}},
-
-      resolve(parent, { id }) {
-        return User.findById(id)
-          .then(user => user)
-          .catch(err => console.log(err))
+      resolve(parent, args, req) {
+        console.log('hii')
+        console.log(req.user)
+        return req.user
       }
     },
 
