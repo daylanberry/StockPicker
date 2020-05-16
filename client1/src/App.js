@@ -9,8 +9,8 @@ const USER = gql`
   query {
 
     currentUser {
-      id
       name
+      id
       email
     }
   }
@@ -30,11 +30,14 @@ function App(props) {
 
   const { loading, error, data } = useQuery(USER)
 
-  console.log(data)
+  const getUser = () => {
+    // axios.get('/api/currentUser')
+    //   .then(res => console.log(res.data))
+  }
 
   return (
     <div className="App">
-      <a href='auth/google'>google</a>
+      <a href='auth/google' onClick={getUser}>google</a>
       <button onClick={() => console.log(data)}>data</button>
     </div>
   );

@@ -12,9 +12,7 @@ const RootQuery = new GraphQLObjectType({
     currentUser: {
       type: userType,
       resolve(parent, args, req) {
-        console.log('hii')
-        console.log(req.user)
-        return req.user
+        return User.findOne({email: req.user.email})
       }
     },
 
