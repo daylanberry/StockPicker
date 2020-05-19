@@ -6,21 +6,19 @@ import * as serviceWorker from './serviceWorker';
 
 import { BrowserRouter } from 'react-router-dom'
 import ApolloClient from 'apollo-boost'
-import { gql } from 'apollo-boost'
-import { createNetworkInterface } from 'react-apollo'
 import { ApolloProvider } from '@apollo/react-hooks'
-//import { InMemoryCache } from 'apollo-cache-inmemory'
-import { HttpLink, InMemoryCache } from 'apollo-client-preset'
-import axios from 'axios'
+import { InMemoryCache } from 'apollo-client-preset'
+
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 const cache = new InMemoryCache()
-
 
 const client = new ApolloClient({
   uri: 'http://localhost:5010/graphql',
   credentials: 'include',
   cache,
+
 })
 
 

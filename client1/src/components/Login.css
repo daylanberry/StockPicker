@@ -1,0 +1,20 @@
+.login-buttons {
+  padding: 10px;
+  margin: 10px;
+  justify-content: space-between;
+  align-items: space-between;
+}
+
+.signin-form {
+  padding-top: 100px;
+}
+
+.google {
+  padding-left: 10px;
+  top: 100px;
+}
+
+.error {
+  color: red;
+  padding-top: 10px;
+}

@@ -13,6 +13,7 @@ const RootQuery = new GraphQLObjectType({
       type: userType,
       resolve(parent, args, req) {
         return User.findOne({email: req.user.email})
+          .then(user => user)
       }
     },
 

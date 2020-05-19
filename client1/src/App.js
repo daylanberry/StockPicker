@@ -1,46 +1,24 @@
-import React, {useState} from 'react';
+import React from 'react';
 import './App.css';
-import axios from 'axios'
-import { gql } from 'apollo-boost'
-import { useQuery } from '@apollo/react-hooks'
-import { graphql } from 'react-apollo'
-
-const USER = gql`
-  query {
-
-    currentUser {
-      name
-      id
-      email
-    }
-  }
-`
-
-const login = gql`
-  mutation {
-    login(email: "test@gmail.com", password: "1234") {
-      name
-      email
-      id
-    }
-  }
-`
+import { Switch, Route } from 'react-router-dom'
+import Header from './components/Header'
+import Home from './components/Home'
+import Login from './components/Login'
 
 function App(props) {
 
-  const { loading, error, data } = useQuery(USER)
-
-  const getUser = () => {
-    // axios.get('/api/currentUser')
-    //   .then(res => console.log(res.data))
-  }
-
   return (
     <div className="App">
-      <a href='auth/google' onClick={getUser}>google</a>
-      <button onClick={() => console.log(data)}>data</button>
+      <div className='container'>
+        <Header />
+        <Switch>
+          <Route exact path='/signup' component={Login} />
+          <Route exact path='/login' component={Login} />
+          <Route exact path='/' component={Home} />
+        </Switch>
+      </div>
     </div>
   );
 }
 
-export default graphql(USER)(graphql(login)(App));
+export default App;

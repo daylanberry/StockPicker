@@ -52,6 +52,7 @@ const googleSignIn = (req) => {
         reject('Something Went Wrong')
       } else {
         req.login(user, () => resolve(user))
+        .catch(err => err)
       }
     })
   })
