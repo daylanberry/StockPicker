@@ -12,7 +12,9 @@ const Mutations = new GraphQLObjectType({
     logout: {
       type: userType,
       resolve(parent, args, req) {
+        var { user } = req
         req.logout()
+        return user
       }
     },
     login: {

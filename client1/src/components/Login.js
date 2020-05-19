@@ -2,9 +2,10 @@ import React, { useState } from 'react'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form'
 import './Login.css'
+
 import LOGIN_USER from '../mutations/loginUser'
-import CURRENT_USER from '../queries/currentUser'
 import { useMutation, useQuery } from '@apollo/react-hooks';
+import CURRENT_USER from '../queries/currentUser'
 
 
 const Login = (props) => {
@@ -12,30 +13,9 @@ const Login = (props) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const { data } = useQuery(CURRENT_USER)
-
-
-  const [
-    loginUser,
-    {loading, error }] = useMutation(
-      LOGIN_USER,
-      {
-        update(cache, { data: { login }}){
-          try {
-            const currentUser = cache.readQuery({query: CURRENT_USER })
-
-            cache.writeQuery({
-              query: CURRENT_USER,
-              data: currentUser
-            });
-
-            props.history.push('/')
-          } catch(e) {
-            console.log(e)
-          }
-        }
-      }
-    )
+  const [loginUser] = useMutation(LOGIN_USER, {
+    refetchQueries: [{query: CURRENT_USER }]
+  })
 
   const handleSubmit = (e, method) => {
     e.preventDefault()
@@ -44,13 +24,14 @@ const Login = (props) => {
       variables: { email, password }
     })
 
+    setEmail('')
+    setPassword('')
+
+    props.history.push('/')
+
   }
 
 
-
-  if (error) {
-    return <p>Invalid Credentials</p>
-  }
   return (
     <div className='signin-form row justify-content-center'>
       <Form

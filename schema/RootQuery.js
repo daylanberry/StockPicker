@@ -12,8 +12,8 @@ const RootQuery = new GraphQLObjectType({
     currentUser: {
       type: userType,
       resolve(parent, args, req) {
-        return User.findOne({email: req.user.email})
-          .then(user => user)
+        let email = req.user ? req.user.email : null
+        return User.findOne({ email })
       }
     },
 

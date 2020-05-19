@@ -12,13 +12,14 @@ import { InMemoryCache } from 'apollo-client-preset'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-const cache = new InMemoryCache()
+const cache = new InMemoryCache({
+  dataIdFromObject: o => o.id
+})
 
 const client = new ApolloClient({
   uri: 'http://localhost:5010/graphql',
   credentials: 'include',
-  cache,
-
+  cache
 })
 
 
