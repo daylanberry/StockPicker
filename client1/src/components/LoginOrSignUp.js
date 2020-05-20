@@ -38,7 +38,11 @@ const LoginOrSignUp = (props) => {
     func({
       variables: { email, password }
     }).then(user => props.history.push('/'))
-    .catch(res => setErrors(res.graphQLErrors[0].message))
+    .catch(res => {
+      const errors = res.graphQLErrors[0] ? res.graphQLErrors[0].message : 'Invalid Credentials!'
+
+      return setErrors(errors)
+    })
 
     setEmail('')
     setPassword('')
