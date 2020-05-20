@@ -3,7 +3,8 @@ import './App.css';
 import { Switch, Route } from 'react-router-dom'
 import Header from './components/Header'
 import Home from './components/Home'
-import Login from './components/Login'
+import LoginOrSignUp from './components/LoginOrSignUp'
+import Search from './components/Search'
 
 function App(props) {
 
@@ -12,8 +13,9 @@ function App(props) {
       <div className='container'>
         <Header />
         <Switch>
-          <Route exact path='/signup' component={Login} />
-          <Route exact path='/login' component={Login} />
+          <Route exact path='/signup' component={(props) => <LoginOrSignUp existing={false} {...props} />} />
+          <Route exact path='/login' component={(props) => <LoginOrSignUp existing={true} {...props} />} />
+          <Route exact path='/search' component={Search} />
           <Route exact path='/' component={Home} />
         </Switch>
       </div>

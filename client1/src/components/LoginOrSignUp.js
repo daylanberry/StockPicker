@@ -1,35 +1,67 @@
 import React, { useState } from 'react'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form'
-import './Login.css'
+import './LoginOrSignUp.css'
 
 import LOGIN_USER from '../mutations/loginUser'
+import SIGN_UP from '../mutations/signUpUser'
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import CURRENT_USER from '../queries/currentUser'
 
 
-const Login = (props) => {
+const LoginOrSignUp = (props) => {
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [password2, setPassword2] = useState('')
+  const [errors, setErrors] = useState('')
 
   const [loginUser] = useMutation(LOGIN_USER, {
     refetchQueries: [{query: CURRENT_USER }]
   })
+  const [signUpUser] = useMutation(SIGN_UP, {
+    refetchQueries: [{query: CURRENT_USER}]
+  })
 
   const handleSubmit = (e, method) => {
     e.preventDefault()
+    const existing = props.existing
 
-    loginUser({
+    if (!existing && password !== password2) {
+      alert('passwords are not the same')
+      setPassword('')
+      setPassword2('')
+      return
+    }
+    let func = existing ? loginUser : signUpUser
+
+    func({
       variables: { email, password }
-    })
+    }).then(user => props.history.push('/'))
+    .catch(res => setErrors(res.graphQLErrors[0].message))
 
     setEmail('')
     setPassword('')
-
-    props.history.push('/')
+    setErrors('')
 
   }
+
+  const retypePassword = () => {
+    return (
+      <Form.Group controlId="formBasicPassword">
+        <Form.Label>Confirm Password</Form.Label>
+        <Form.Control
+          type="password"
+          placeholder="Retype Password"
+          value={password2}
+          name='password'
+          onChange={(e) => setPassword2(e.target.value)}
+        />
+      </Form.Group>
+    )
+  }
+
+
 
 
   return (
@@ -59,18 +91,23 @@ const Login = (props) => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </Form.Group>
+        {
+          !props.existing ? retypePassword() : null
+        }
 
         <div className='d-flex' >
           <Button className='red' variant="primary" type="submit">
             Login with email
           </Button>
-          <a href='auth/google' onClick={() => console.log('hi')} className='google'>Sign In with Google</a>
-
+          <a href='auth/google' className='google'>Sign In with Google</a>
         </div>
+        {
+          errors ? errors: null
+        }
       </Form>
     </div>
   )
 
 }
 
-export default Login
+export default LoginOrSignUp
