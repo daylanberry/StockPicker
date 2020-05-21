@@ -1,21 +1,17 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Card, ListGroup } from 'react-bootstrap'
-import axios from 'axios'
 
 
-
-
-const Suggestions = ({stock: { symbol, name }}) => {
+const Suggestions = ({tickerChange, stock: { symbol, name }}) => {
 
   return (
     <Card style={{ width: '17rem' }}>
       <ListGroup variant="flush">
         <ListGroup.Item>
-          <div>
-            {symbol}
-          <span>
-            ({name})
-          </span>
+          <div onClick={() => tickerChange(symbol)}>
+            <span style={{'fontSize': '10px', 'cursor': 'pointer'}}>
+              {name} <strong>({symbol})</strong>
+            </span>
           </div>
         </ListGroup.Item>
      </ListGroup>

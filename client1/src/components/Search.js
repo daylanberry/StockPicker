@@ -47,6 +47,10 @@ class Search extends React.Component {
 
   }
 
+  suggestionTickerChange = (ticker) => {
+    this.setState({ticker})
+  }
+
 
   handleSubmit = (e) => {
     const { ticker } = this.state
@@ -76,8 +80,12 @@ class Search extends React.Component {
           <Button type="submit">Get Info</Button>
         </Form>
         {
-          suggestions.map((stock) => (
-            <Suggestions stock={stock} />
+          suggestions.map((stock, i) => (
+            <Suggestions
+              key={i}
+              stock={stock}
+              tickerChange={this.suggestionTickerChange}
+            />
           ))
         }
       </div>

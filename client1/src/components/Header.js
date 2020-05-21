@@ -1,10 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Navbar, Nav, Form, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { withRouter } from 'react-router-dom'
 
 import CURRENT_USER from '../queries/currentUser'
-import { graphql } from 'react-apollo'
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import LOGOUT from '../mutations/logoutUser.js'
 
@@ -13,7 +12,7 @@ import './Header.css'
 
 const Header = (props) => {
 
-  const { data, loading, error } = useQuery(CURRENT_USER)
+  const { data, loading } = useQuery(CURRENT_USER)
 
   const [logout] = useMutation(LOGOUT, {
     refetchQueries: [{query: CURRENT_USER}]
