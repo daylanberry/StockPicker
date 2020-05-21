@@ -13,22 +13,38 @@ class Search extends React.Component {
 
     this.state = {
       ticker: '',
-      values: [{name: 'test'}]
+      suggestions: []
     }
+  }
+
+  searchSuggestion = (value) => {
+    if (!value.length) this.setState({suggestions: []})
+
+    const searchURI = `https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${value}&apikey=${stockAPI}`
+
+
+    if (this.state.ticker.length % 2 !== 0 && value.length) {
+
+      axios.get(searchURI)
+        .then(res => {
+
+          const suggestions = res.data.bestMatches ? res.data.bestMatches.map(stock => ({
+            symbol: stock["1. symbol"],
+            name: stock["2. name"]
+          })) : []
+
+          this.setState({
+            suggestions
+          })
+        })
+    }
+
   }
 
   handleChange = (e) => {
     const value = e.target.value
-    this.setState({ticker: value})
+    this.setState({ticker: value}, () => this.searchSuggestion(value))
 
-    const searchURI = `https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${value}&apikey=${stockAPI}`
-
-    if (value.length >= 3 && value.length % 2 !== 0) {
-      axios.get(searchURI)
-        .then(res => this.setState({
-          values: res.data
-        }))
-    }
   }
 
 
@@ -44,6 +60,8 @@ class Search extends React.Component {
   }
 
   render() {
+    const { ticker, suggestions } = this.state
+
     return (
       <div className='search'>
         Stock Information
@@ -52,12 +70,16 @@ class Search extends React.Component {
             type="text"
             placeholder="Search Ticker"
             className="mr-md-2"
-            value={this.state.ticker}
+            value={ticker}
             onChange={this.handleChange}
           />
           <Button type="submit">Get Info</Button>
-         {/* <Suggestions options={this.state.values} handleChange={this.handleChange}/> */}
         </Form>
+        {
+          suggestions.map((stock) => (
+            <Suggestions stock={stock} />
+          ))
+        }
       </div>
     )
   }
