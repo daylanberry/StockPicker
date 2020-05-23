@@ -8,7 +8,7 @@ const Suggestions = ({tickerChange, stock: { symbol, name }}) => {
     <Card style={{ width: '17rem' }}>
       <ListGroup variant="flush">
         <ListGroup.Item>
-          <div onClick={() => tickerChange(symbol)}>
+          <div onClick={() => tickerChange(symbol, name)}>
             <span style={{'fontSize': '10px', 'cursor': 'pointer'}}>
               {name} <strong>({symbol})</strong>
             </span>
