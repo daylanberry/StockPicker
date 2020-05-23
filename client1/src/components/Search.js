@@ -5,6 +5,7 @@ import axios from 'axios'
 
 import Suggestions from './Suggestions'
 import StockInfo from './StockInfo'
+import ErrorMessage from './ErrorMessage'
 import { Form, Button, FormControl } from 'react-bootstrap'
 
 
@@ -16,7 +17,8 @@ class Search extends React.Component {
       ticker: '',
       name: '',
       suggestions: [],
-      selectedStock: {}
+      selectedStock: {},
+      error: ''
     }
   }
 
@@ -44,7 +46,7 @@ class Search extends React.Component {
 
   handleChange = (e) => {
     const value = e.target.value
-    this.setState({ticker: value}, () => this.searchSuggestion(value))
+    this.setState({ticker: value, error: ''}, () => this.searchSuggestion(value))
 
   }
 
@@ -52,7 +54,7 @@ class Search extends React.Component {
     this.setState({
       ticker,
       suggestions: [],
-      name
+      name,
     })
   }
 
@@ -66,6 +68,21 @@ class Search extends React.Component {
 
     axios.get(uri)
       .then(res => {
+
+        if (res.data['Error Message']){
+          this.setState({
+            error: 'oops we are not able to fetch this stock!'
+          })
+          return
+        }
+
+        if (res.data['Note']) {
+          this.setState({
+            error: 'This application requires a limit of 5 requests per minute'
+          })
+        }
+
+
         const stockObj = res.data['Global Quote']
 
         let selectedStock = {};
@@ -75,25 +92,18 @@ class Search extends React.Component {
           selectedStock[description] = stockObj[prop]
         }
 
-        selectedStock.name = this.state.selectedStock.name
-
-        if (!selectedStock.price) {
-          alert('This is not a valid ticker')
-          return
-        }
-
-
+        selectedStock.name = this.state.name
 
         this.setState({
           selectedStock,
           suggestions: [],
-          ticker: ''
+          errors: ''
         })
       })
   }
 
   render() {
-    const { ticker, suggestions, selectedStock } = this.state
+    const { ticker, suggestions, selectedStock, name, error } = this.state
 
     return (
       <div className='stock-info'>
@@ -118,10 +128,19 @@ class Search extends React.Component {
               />
             ))
           }
+          {
+            error.length ?  <ErrorMessage message={error}/> : null
+          }
         </div>
         {
-          selectedStock ? <StockInfo stock={selectedStock}/> : null
+          selectedStock.price && selectedStock.name === name ?
+          <StockInfo
+            stock={selectedStock}
+            typedName={name}
+            typedTicker={ticker}
+          /> : null
         }
+
 
       </div>
 

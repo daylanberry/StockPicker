@@ -1,4 +1,19 @@
-.selectedStock {
+.stockInfo {
   margin-left: 50px;
   margin-top: 30px;
+  height: 500px;
+  width: 400px;
+}
+
+.card-columns {
+  display: flex;
+  justify-content: space-between;
+}
+
+.price .positive {
+  color: green;
+}
+
+.price .negative {
+  color: red;
 }
