@@ -47,6 +47,12 @@ const Mutations = new GraphQLObjectType({
         return signUp({name, email, password}, req)
           .catch(err => err)
       }
+    },
+    test: {
+      type: userType,
+      resolve(parent, args, req){
+        console.log(req.user)
+      }
     }
 
   }

@@ -9,19 +9,25 @@ class StockInfo extends React.Component {
 
   }
 
+  numberWithCommas = (x) => {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+  }
+
   priceFormater = (price, change) => {
 
+    const formatedPrice = this.numberWithCommas(parseFloat(price).toFixed(2))
 
     let changeToNum = parseFloat(change).toFixed(2)
     let name = parseInt(change) > 0 ? 'positive': 'negative'
-    // let arrow = name === 'positive' ? &#8593; : &#8595;
+    let arrow = name === 'positive' ? <span>&#8593;</span> :
+    <span>&#8595;</span>
 
     return (
       <div className='price'>
         <strong>
-          ${parseFloat(price).toFixed(2)}
+          ${formatedPrice}
         </strong>
-        <span className={name}> {changeToNum}%</span>
+        <span className={name}> {changeToNum}% {arrow}</span>
       </div>
     )
 

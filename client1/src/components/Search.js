@@ -23,11 +23,14 @@ class Search extends React.Component {
   }
 
   searchSuggestion = (value) => {
+    const { ticker } = this.state
+
     if (!value.length) this.setState({suggestions: []})
 
     const searchURI = `https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${value}&apikey=${stockAPI}`
 
-    if (this.state.ticker.length % 2 !== 0 && value.length) {
+
+    if (ticker.length % 2 !== 0 && value.length > 2) {
 
       axios.get(searchURI)
         .then(res => {
