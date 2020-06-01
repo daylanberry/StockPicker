@@ -139,8 +139,6 @@ class Search extends React.Component {
           selectedStock.price && selectedStock.name === name ?
           <StockInfo
             stock={selectedStock}
-            typedName={name}
-            typedTicker={ticker}
           /> : null
         }
       </div>

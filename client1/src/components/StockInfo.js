@@ -1,8 +1,9 @@
 import React from 'react'
 import './StockInfo.css'
 import StockStats from './StockStats'
+import QuoteOrBuy from './QuoteOrBuy'
 
-import { Card, Button } from 'react-bootstrap'
+import { Card } from 'react-bootstrap'
 
 class StockInfo extends React.Component {
   constructor(props) {
@@ -37,9 +38,7 @@ class StockInfo extends React.Component {
 
 
   render() {
-    const { name, change, high, latest, low, open, previous, price, symbol, volume } = this.props.stock
-
-    const { typedName, typedTicker } = this.props
+    const { name, change, latest, price, symbol } = this.props.stock
 
     return (
       <div>
@@ -60,7 +59,7 @@ class StockInfo extends React.Component {
           <Card.Title>Stock Information</Card.Title>
             <StockStats formatNumber={this.numberWithCommas} {...this.props.stock}/>
 
-            <button>Get Quote</button>
+            <QuoteOrBuy />
         </Card.Body>
        </Card>
 
