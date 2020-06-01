@@ -1,5 +1,6 @@
 import React from 'react'
 import './StockInfo.css'
+import StockStats from './StockStats'
 
 import { Card, Button } from 'react-bootstrap'
 
@@ -9,13 +10,14 @@ class StockInfo extends React.Component {
 
   }
 
-  numberWithCommas = (x) => {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+  numberWithCommas = (n) => {
+    const num = parseFloat(n).toFixed(2)
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
   }
 
   priceFormater = (price, change) => {
 
-    const formatedPrice = this.numberWithCommas(parseFloat(price).toFixed(2))
+    const formatedPrice = this.numberWithCommas(price)
 
     let changeToNum = parseFloat(change).toFixed(2)
     let name = parseInt(change) > 0 ? 'positive': 'negative'
@@ -40,7 +42,7 @@ class StockInfo extends React.Component {
     const { typedName, typedTicker } = this.props
 
     return (
-
+      <div>
       <Card className='stockInfo'>
         <Card.Header>
           <span>{name} </span>
@@ -56,24 +58,17 @@ class StockInfo extends React.Component {
 
         <Card.Body>
           <Card.Title>Stock Information</Card.Title>
-          <div className='card-columns'>
-            <div className='card-block'>
-              <div>
-                Price change: {change}
-              </div>
-            </div>
+            <StockStats formatNumber={this.numberWithCommas} {...this.props.stock}/>
 
-            <div className='card-block'>
-              <div>
-                52 week high: {high}
-              </div>
-            </div>
-
-          </div>
+            <button>Get Quote</button>
         </Card.Body>
        </Card>
+
+      </div>
+
     )
   }
 }
 
 export default StockInfo
+

@@ -1,6 +1,6 @@
 import React from 'react'
 import './Search.css'
-import { stockAPI } from '../keys/keys'
+import { stockAPI, suggestionStock } from '../keys/keys'
 import axios from 'axios'
 
 import Suggestions from './Suggestions'
@@ -27,7 +27,7 @@ class Search extends React.Component {
 
     if (!value.length) this.setState({suggestions: []})
 
-    const searchURI = `https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${value}&apikey=${stockAPI}`
+    const searchURI = `https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${value}&apikey=${suggestionStock}`
 
 
     if (ticker.length % 2 !== 0 && value.length > 2) {
@@ -143,8 +143,6 @@ class Search extends React.Component {
             typedTicker={ticker}
           /> : null
         }
-
-
       </div>
 
     )
