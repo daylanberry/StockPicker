@@ -57,8 +57,14 @@ class StockInfo extends React.Component {
         <Card.Body>
           <Card.Title>Stock Information</Card.Title>
 
-            <StockStats formatNumber={this.numberWithCommas} {...this.props.stock}/>
-            <QuoteOrBuy price={Number(price)}/>
+            <StockStats
+              formatNumber={this.numberWithCommas}
+              {...this.props.stock}
+            />
+            <QuoteOrBuy
+              price={Number(price)}
+              formatNumber={this.numberWithCommas}
+            />
 
         </Card.Body>
        </Card>

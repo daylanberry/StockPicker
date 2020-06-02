@@ -20,23 +20,50 @@ class QuoteOrBuy extends React.Component {
     const { qty } = this.state
     const { price } = this.props
 
+
     if (qty > 0) {
       let quotedAmount = +(qty * price).toFixed(2)
+
       this.setState({ quotedAmount })
     }
   }
 
   handleChange = (e) => {
+    let newQty = Number(e.target.value)
     this.setState({
-      qty: Number(e.target.value)
+      qty: newQty,
+      quotedAmount: 0
+    })
+  }
+
+  handleSubmit = () => {
+
+    const { confirm } = this.state;
+
+    if (!confirm) {
+      this.setState({
+        confirm: true
+      })
+    } else {
+      //submit stock info
+    }
+  }
+
+  cancelOrder = () => {
+
+    this.setState({
+      confirm: false,
+      quotedAmount: 0,
+      qty: 0
     })
   }
 
 
 
-
   render() {
-    const { quotedAmount, button, cost, qty } = this.state
+    const { quotedAmount, button, cost, qty, confirm } = this.state
+    const { formatNumber } = this.props
+
     return (
       <div>
         <div className='quote-option'>
@@ -52,11 +79,20 @@ class QuoteOrBuy extends React.Component {
           </div>
             <Button onClick={this.calculatePrice}>Get Quote</Button>
         </div>
-        <TransactionSummary
-          quote={quotedAmount}
-          qty={qty}
-        />
 
+        {
+          quotedAmount > 0 ?
+          <TransactionSummary
+            quote={quotedAmount}
+            qty={qty}
+            confirm={confirm}
+            handleSubmit={this.handleSubmit}
+            cancelOrder={this.cancelOrder}
+            formatNumber={formatNumber}
+          /> :
+          null
+
+        }
       </div>
     )
   }

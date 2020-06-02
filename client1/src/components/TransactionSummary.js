@@ -3,18 +3,34 @@ import { Table, Button } from 'react-bootstrap'
 import './TransactionSummary.css'
 
 
-const TransactionSummary = ({quote, qty}) => {
+const TransactionSummary = ({quote, qty, confirm, handleSubmit, cancelOrder, formatNumber}) => {
 
+  const continueOrSubmit = () => {
+    return (
+      <Button
+        onClick={handleSubmit}
+        className='continue-submit'
+        variant={confirm ? "success" : "primary"}
+      >
+        {confirm ? 'Submit' : 'Continue'}
+      </Button>
+    )
+  }
 
   return (
     <div className='transaction'>
-      <h4>Transaction Summary</h4>
+      <h4>
+        {
+          confirm ? 'Review and Submit' :
+          'Transaction Summary'
+        }
+      </h4>
       <div className='stock-table'>
         <Table>
           <tbody>
             <tr>
               <td>Amount:</td>
-              <td>{quote}</td>
+              <td>${formatNumber(quote)}</td>
             </tr>
           </tbody>
         </Table>
@@ -30,9 +46,14 @@ const TransactionSummary = ({quote, qty}) => {
     </div>
 
       <div className='transaction-buttons'>
-        <Button className='cancel-btn' variant="secondary">Cancel</Button>
-        <Button className='continue-submit' variant="primary">Continue</Button>
-
+        <Button
+          className='cancel-btn'
+          variant="secondary"
+          onClick={cancelOrder}
+        >
+          Cancel
+        </Button>
+        {continueOrSubmit()}
       </div>
     </div>
   )
