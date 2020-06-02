@@ -1,0 +1,18 @@
+.transaction {
+  margin-top: 15px;
+  height: 50px;
+}
+
+
+.transaction-buttons {
+  height: 100px;
+
+}
+.continue-submit {
+  float: right;
+  margin-right: 50px;
+}
+
+.cancel-btn {
+  margin-left: 5px;
+}

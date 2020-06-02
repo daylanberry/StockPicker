@@ -1,6 +1,7 @@
 import React from 'react'
 import './QuoteOrBuy.css'
-
+import TransactionSummary from './TransactionSummary'
+import { Button } from 'react-bootstrap'
 
 class QuoteOrBuy extends React.Component {
 
@@ -8,43 +9,54 @@ class QuoteOrBuy extends React.Component {
     super(props)
 
     this.state = {
-      button: 'Get Quote',
-      quoteType: 'Shares',
-      confirm: false
+      confirm: false,
+      qty: 0,
+      quotedAmount: 0
     }
   }
 
-  setQuoteType = (type) => {
-    if (type === 'Shares') {
-      this.setState({ quoteType: 'Dollars'})
-    } else {
-      this.setState({ quoteType: 'Shares'})
+
+  calculatePrice = (type) => {
+    const { qty } = this.state
+    const { price } = this.props
+
+    if (qty > 0) {
+      let quotedAmount = +(qty * price).toFixed(2)
+      this.setState({ quotedAmount })
     }
   }
+
+  handleChange = (e) => {
+    this.setState({
+      qty: Number(e.target.value)
+    })
+  }
+
+
 
 
   render() {
-    const { quoteType } = this.state
+    const { quotedAmount, button, cost, qty } = this.state
     return (
-      <div className='quote-option'>
-        <div>
-          {quoteType}:
-          <input
-            className='shares-input'
-            type='text'
-          />
+      <div>
+        <div className='quote-option'>
+          <div>
+            Shares:
+            <input
+              className='shares-input'
+              type='text'
+              type='number'
+              value={qty > 0 ? qty : ''}
+              onChange={this.handleChange}
+            />
+          </div>
+            <Button onClick={this.calculatePrice}>Get Quote</Button>
         </div>
-        <span
-          className='dollar-option'
-          onClick={() => this.setQuoteType(quoteType)}
-        >
-          {
-            quoteType === 'Shares' ?
-            "Switch to $ amount" :
-            "Switch to share qty"
-          }
+        <TransactionSummary
+          quote={quotedAmount}
+          qty={qty}
+        />
 
-        </span>
       </div>
     )
   }

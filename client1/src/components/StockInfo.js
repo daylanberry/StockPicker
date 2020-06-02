@@ -33,7 +33,6 @@ class StockInfo extends React.Component {
         <span className={name}> {changeToNum}% {arrow}</span>
       </div>
     )
-
   }
 
 
@@ -57,14 +56,14 @@ class StockInfo extends React.Component {
 
         <Card.Body>
           <Card.Title>Stock Information</Card.Title>
-            <StockStats formatNumber={this.numberWithCommas} {...this.props.stock}/>
 
-            <QuoteOrBuy />
+            <StockStats formatNumber={this.numberWithCommas} {...this.props.stock}/>
+            <QuoteOrBuy price={Number(price)}/>
+
         </Card.Body>
        </Card>
 
       </div>
-
     )
   }
 }

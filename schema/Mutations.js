@@ -29,13 +29,6 @@ const Mutations = new GraphQLObjectType({
       }
     },
 
-    googleSignIn: {
-      type: userType,
-      resolve(parent, args, req) {
-        return googleSignIn(req)
-      }
-    },
-
     signup: {
       type: userType,
       args: {
