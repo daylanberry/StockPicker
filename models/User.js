@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
-const Stock = require('./Stock.js')
+// const StockSchema = require('./Stock.js')
 const Schema = mongoose.Schema;
 
 var user = new Schema({
@@ -9,10 +9,7 @@ var user = new Schema({
   email: String,
   password: String,
   googleId: { type: String, unique: false },
-  stocks: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Stock'
-  }]
+  // stocks: [StockSchema]
 })
 
 

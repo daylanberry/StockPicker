@@ -18,9 +18,6 @@ const userType = new GraphQLObjectType({
       type: GraphQLString
     },
     stocks: {
-      type: GraphQLObjectType
-    },
-    stocks: {
       type: new GraphQLList(StockType),
       resolve(parent) {
         return User.findById(parent.id)
