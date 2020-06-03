@@ -4,7 +4,7 @@ const Schema = mongoose.Schema
 const StockSchema = new Schema({
   name: String,
   ticker: String,
-  price: Number,
+  costPerShare: Number,
   qty: Number,
   totalCost: Number,
   currentPrice: Number,

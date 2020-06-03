@@ -11,10 +11,13 @@ const stockType = new GraphQLObjectType({
     ticker: {
       type: GraphQLString
     },
-    price: {
+    costPerShare: {
       type: GraphQLInt
     },
     qty: {
+      type: GraphQLInt
+    },
+    totalCost: {
       type: GraphQLInt
     },
     currentPrice: {

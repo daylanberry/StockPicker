@@ -27,19 +27,23 @@ user.methods.validPassword = (password, userPassword) => {
 
 user.statics.insertStock = async (stockObj) => {
   let newQty = stockObj.qty;
-  let addedCost = stockObj.price * newQty
+  let newPrice = stockObj.price
+  let addedCost = newPrice * newQty
 
-  let user = await Stock.findOne({user: stockObj.user, ticker: stockObj.ticker})
+  let stock = await Stock.findOne({user: stockObj.user, ticker: stockObj.ticker})
 
-  if (!user) {
+  if (!stock) {
     return new Stock(stockObj).save()
   } else {
-    let previousCost = user.totalCost
+    let previousCost = stock.totalCost
     let totalCost = addedCost + previousCost
-    let updatedQty = newQty + user.qty
-    user.qty = updatedQty
-    user.totalCost = totalCost
-    return user.save()
+    let updatedQty = newQty + stock.qty
+
+    stock.qty = updatedQty
+    stock.totalCost = totalCost
+    stock.currentPrice = stockObj.price
+    stock.costPerShare = totalCost/updatedQty
+    return stock.save()
   }
 
 }
