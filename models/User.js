@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
-// const StockSchema = require('./Stock.js')
+const Stock = require('./Stock.js')
 const Schema = mongoose.Schema;
 
 var user = new Schema({
@@ -9,7 +9,6 @@ var user = new Schema({
   email: String,
   password: String,
   googleId: { type: String, unique: false },
-  // stocks: [StockSchema]
 })
 
 
@@ -26,17 +25,23 @@ user.methods.validPassword = (password, userPassword) => {
   return bcrypt.compareSync(password, userPassword)
 }
 
-user.statics.insertStock = (stockObj) => {
-  const User = mongoose.model('User')
-  const Stock = mongoose.model('Stock')
-  let newStock = new Stock(stockObj).save()
-    .then(stock => {
-      User.findById(stockObj.user)
-        .then(user => {
-          user.stocks.push(stock)
-          return user.save()
-        })
-    })
+user.statics.insertStock = async (stockObj) => {
+  let newQty = stockObj.qty;
+  let addedCost = stockObj.price * newQty
+
+  let user = await Stock.findOne({user: stockObj.user, ticker: stockObj.ticker})
+
+  if (!user) {
+    return new Stock(stockObj).save()
+  } else {
+    let previousCost = user.totalCost
+    let totalCost = addedCost + previousCost
+    let updatedQty = newQty + user.qty
+    user.qty = updatedQty
+    user.totalCost = totalCost
+    return user.save()
+  }
+
 }
 
 

@@ -18,8 +18,7 @@ passport.use(new GoogleStrategy({
           var currentUser = new User({
             googleId: profile.id,
             username: profile.displayName,
-            email: profile.email,
-            stocks: []
+            email: profile.email
           })
           currentUser.save((err, user) => {
             return done(err, user)
@@ -29,7 +28,6 @@ passport.use(new GoogleStrategy({
         }
       })
   }
-
 ))
 
 passport.serializeUser((user, cb) => {

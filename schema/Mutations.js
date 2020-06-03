@@ -58,7 +58,7 @@ const Mutations = new GraphQLObjectType({
       resolve(parent, { name, ticker, price, qty, currentPrice }, req) {
         const addedStock = {name, ticker, price, qty, currentPrice, user: req.user._id }
 
-        User.insertStock(addedStock)
+        return User.insertStock(addedStock)
       }
 
     }

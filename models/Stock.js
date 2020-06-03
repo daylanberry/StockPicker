@@ -6,6 +6,7 @@ const StockSchema = new Schema({
   ticker: String,
   price: Number,
   qty: Number,
+  totalCost: Number,
   currentPrice: Number,
   user: {
     type: Schema.Types.ObjectId,
