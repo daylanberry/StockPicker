@@ -1,9 +1,13 @@
 const graphql = require('graphql')
 const userType = require('./types/userType')
+const stockType = require('./types/stockType')
 const axios = require('axios')
 const { login, googleSignIn, signUp } = require('./strategies.js')
+const mongoose = require('mongoose')
+const User = mongoose.model('User')
+const StockSchema = require('../models/Stock')
 
-const { GraphQLObjectType, GraphQLString } = graphql
+const { GraphQLObjectType, GraphQLString, GraphQLInt } = graphql
 
 
 const Mutations = new GraphQLObjectType({
@@ -41,11 +45,22 @@ const Mutations = new GraphQLObjectType({
           .catch(err => err)
       }
     },
-    test: {
-      type: userType,
-      resolve(parent, args, req){
-        console.log(req.user)
+
+    addStock: {
+      type: stockType,
+      args: {
+        name: { type: GraphQLString },
+        ticker: { type: GraphQLString },
+        price: { type: GraphQLInt },
+        qty: { type: GraphQLInt },
+        currentPrice: { type: GraphQLInt }
+      },
+      resolve(parent, { name, ticker, price, qty, currentPrice }, req) {
+        const addedStock = {name, ticker, price, qty, currentPrice, user: req.user._id }
+
+        User.insertStock(addedStock)
       }
+
     }
 
   }

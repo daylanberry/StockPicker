@@ -45,7 +45,7 @@ class QuoteOrBuy extends React.Component {
         confirm: true
       })
     } else {
-      //submit stock info
+      console.log('submitted')
     }
   }
 

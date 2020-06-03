@@ -11,6 +11,7 @@ const schema = require('./schema/schema.js')
 const session = require('express-session');
 
 mongoose.connect(`mongodb+srv://daylan:${keys.mongoURI}@cluster0-pqujg.mongodb.net/test?retryWrites=true&w=majority`, {useNewUrlParser: true})
+require('./models/Stock.js')
 require('./models/User.js')
 require('./services/localSignup.js')
 require('./services/google.js')

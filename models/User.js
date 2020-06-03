@@ -1,13 +1,18 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
+const Stock = require('./Stock.js')
 const Schema = mongoose.Schema;
 
 var user = new Schema({
   name: String,
   email: String,
   password: String,
-  googleId: { type: String, unique: false }
+  googleId: { type: String, unique: false },
+  stocks: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Stock'
+  }]
 })
 
 
@@ -22,6 +27,19 @@ user.pre("save", function(next) {
 
 user.methods.validPassword = (password, userPassword) => {
   return bcrypt.compareSync(password, userPassword)
+}
+
+user.statics.insertStock = (stockObj) => {
+  const User = mongoose.model('User')
+  const Stock = mongoose.model('Stock')
+  let newStock = new Stock(stockObj).save()
+    .then(stock => {
+      User.findById(stockObj.user)
+        .then(user => {
+          user.stocks.push(stock)
+          return user.save()
+        })
+    })
 }
 
 
