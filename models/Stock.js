@@ -14,6 +14,32 @@ const StockSchema = new Schema({
   }
 })
 
+StockSchema.statics.insertStock = async (stockObj) => {
+  let addedCost = stockObj.price * stockObj.qty
+
+  let stock = await Stock.findOne({
+    user: stockObj.user,
+    ticker: stockObj.ticker
+  })
+
+  if (!stock) {
+    stockObj.costPerShare = stockObj.currentPrice = stockObj.price
+    stockObj.totalCost = stockObj.addedCost
+
+    return new Stock(stockObj).save()
+  } else {
+    let totalCost = addedCost + stock.totalCost
+    let updatedQty = stockObj.qty + stock.qty
+
+    stock.qty = updatedQty
+    stock.totalCost = totalCost
+    stock.currentPrice = stockObj.price
+    stock.costPerShare = totalCost / updatedQty
+    return stock.save()
+  }
+
+}
+
 const Stock = mongoose.model('Stock', StockSchema)
 
 module.exports = Stock

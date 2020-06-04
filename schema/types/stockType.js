@@ -1,5 +1,5 @@
 const graphql = require('graphql')
-const { GraphQLObjectType, GraphQLString, GraphQLInt } = graphql
+const { GraphQLObjectType, GraphQLString, GraphQLFloat, GraphQLInt } = graphql
 
 
 const stockType = new GraphQLObjectType({
@@ -12,16 +12,16 @@ const stockType = new GraphQLObjectType({
       type: GraphQLString
     },
     costPerShare: {
-      type: GraphQLInt
+      type: GraphQLFloat
     },
     qty: {
       type: GraphQLInt
     },
     totalCost: {
-      type: GraphQLInt
+      type: GraphQLFloat
     },
     currentPrice: {
-      type: GraphQLInt
+      type: GraphQLFloat
     },
 
   }

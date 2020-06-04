@@ -5,9 +5,10 @@ const axios = require('axios')
 const { login, googleSignIn, signUp } = require('./strategies.js')
 const mongoose = require('mongoose')
 const User = mongoose.model('User')
+const Stock = mongoose.model('Stock')
 const StockSchema = require('../models/Stock')
 
-const { GraphQLObjectType, GraphQLString, GraphQLInt } = graphql
+const { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLFloat } = graphql
 
 
 const Mutations = new GraphQLObjectType({
@@ -51,16 +52,14 @@ const Mutations = new GraphQLObjectType({
       args: {
         name: { type: GraphQLString },
         ticker: { type: GraphQLString },
-        price: { type: GraphQLInt },
+        price: { type: GraphQLFloat },
         qty: { type: GraphQLInt },
-        currentPrice: { type: GraphQLInt }
       },
-      resolve(parent, { name, ticker, price, qty, currentPrice }, req) {
-        let totalCost = price * qty
-        let costPerShare = price
-        const addedStock = {name, ticker, price, qty, totalCost, currentPrice, costPerShare, user: req.user._id }
+      resolve(parent, { name, ticker, price, qty }, req) {
+        let addedCost = price * qty
+        const addedStock = {name, ticker, price, qty, addedCost, user: req.user._id }
 
-        return User.insertStock(addedStock)
+        return Stock.insertStock(addedStock)
       }
 
     }
