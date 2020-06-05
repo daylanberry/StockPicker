@@ -56,6 +56,7 @@ const Mutations = new GraphQLObjectType({
         qty: { type: GraphQLInt },
       },
       resolve(parent, { name, ticker, price, qty }, req) {
+
         let addedCost = price * qty
         const addedStock = {name, ticker, price, qty, addedCost, user: req.user._id }
 

@@ -37,7 +37,8 @@ class StockInfo extends React.Component {
 
 
   render() {
-    const { name, change, latest, price, symbol } = this.props.stock
+    const { change, latest, price, symbol } = this.props.stock
+    const { name } = this.props
 
     return (
       <div>

@@ -1,13 +1,12 @@
 import React from 'react'
 import './Search.css'
-import { stockAPI, suggestionStock } from '../keys/keys'
+import { stockAPI, suggestionStock, finnhub } from '../keys/keys'
 import axios from 'axios'
 
 import Suggestions from './Suggestions'
 import StockInfo from './StockInfo'
 import ErrorMessage from './ErrorMessage'
 import { Form, Button, FormControl } from 'react-bootstrap'
-
 
 class Search extends React.Component {
   constructor(props) {
@@ -17,10 +16,13 @@ class Search extends React.Component {
       ticker: '',
       name: '',
       suggestions: [],
+      clickedSuggestion: false,
       selectedStock: {},
       error: ''
     }
   }
+
+
 
   searchSuggestion = (value) => {
     const { ticker } = this.state
@@ -49,7 +51,11 @@ class Search extends React.Component {
 
   handleChange = (e) => {
     const value = e.target.value
-    this.setState({ticker: value, error: ''}, () => this.searchSuggestion(value))
+    this.setState({
+      ticker: value.toUpperCase(),
+      error: '',
+      clickedSuggestion: false
+    }, () => this.searchSuggestion(value))
 
   }
 
@@ -57,15 +63,30 @@ class Search extends React.Component {
     this.setState({
       ticker,
       suggestions: [],
+      clickedSuggestion: true,
       name,
     })
   }
 
+  getAdditionalInfo = () => {
+    const { ticker, clickedSuggestion } = this.state;
+    var uri = `https://finnhub.io/api/v1/stock/profile2?symbol=${ticker}&token=${finnhub}`
+
+    if (!clickedSuggestion) {
+      axios.get(uri)
+        .then(res => {
+          this.setState({
+            name: res.data.name
+          })
+        })
+    }
+
+  }
 
   handleSubmit = (e) => {
     e.preventDefault();
 
-    const { ticker } = this.state
+    const { ticker, name } = this.state
 
     const uri = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${ticker}&apikey=${stockAPI}`
 
@@ -95,14 +116,13 @@ class Search extends React.Component {
           selectedStock[description] = stockObj[prop]
         }
 
-        selectedStock.name = this.state.name
-
         this.setState({
           selectedStock,
           suggestions: [],
           errors: ''
-        })
+        }, () => this.getAdditionalInfo())
       })
+
   }
 
   render() {
@@ -136,8 +156,9 @@ class Search extends React.Component {
           }
         </div>
         {
-          selectedStock.price && selectedStock.name === name ?
+          selectedStock.symbol === ticker ?
           <StockInfo
+            name={name}
             stock={selectedStock}
           /> : null
         }
