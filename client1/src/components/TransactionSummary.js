@@ -20,7 +20,8 @@ const TransactionSummary = ({quote, qty, confirm, handleSubmit, cancelOrder, for
           className='continue-submit'
           variant='warning'
         >
-          Continue
+          &#128540;
+          &#10060;
         </Button>
     )
 
