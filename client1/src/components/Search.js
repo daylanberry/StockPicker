@@ -104,6 +104,7 @@ class Search extends React.Component {
           this.setState({
             error: 'This application requires a limit of 5 requests per minute'
           })
+          return
         }
 
 
@@ -119,7 +120,7 @@ class Search extends React.Component {
         this.setState({
           selectedStock,
           suggestions: [],
-          errors: ''
+          error: ''
         }, () => this.getAdditionalInfo())
       })
 

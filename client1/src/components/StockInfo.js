@@ -65,6 +65,8 @@ class StockInfo extends React.Component {
             <QuoteOrBuy
               price={Number(price)}
               formatNumber={this.numberWithCommas}
+              name={name}
+              ticker={symbol}
             />
 
         </Card.Body>

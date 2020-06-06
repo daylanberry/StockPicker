@@ -1,11 +1,31 @@
-import React from 'react'
-import { Table, Button } from 'react-bootstrap'
+import React, { useState } from 'react'
+import { Table, Button, Alert } from 'react-bootstrap'
 import './TransactionSummary.css'
+import Loading from './Loading'
 
+const TransactionSummary = ({quote, qty, confirm, handleSubmit, cancelOrder, formatNumber, loadingSubmit, user}) => {
 
-const TransactionSummary = ({quote, qty, confirm, handleSubmit, cancelOrder, formatNumber}) => {
+  const [ showHoverMsg, toggleShowHoverMsg ] = useState(false)
 
   const continueOrSubmit = () => {
+    let isDisabled = user ? false : true
+
+    if (loadingSubmit) return <Loading />
+
+    if (isDisabled) {
+      return (
+        <Button
+          onMouseEnter={() => toggleShowHoverMsg(true)}
+          onMouseLeave={() => toggleShowHoverMsg(false)}
+          className='continue-submit'
+          variant='warning'
+        >
+          Continue
+        </Button>
+    )
+
+    }
+
     return (
       <Button
         onClick={handleSubmit}
@@ -14,6 +34,18 @@ const TransactionSummary = ({quote, qty, confirm, handleSubmit, cancelOrder, for
       >
         {confirm ? 'Submit' : 'Continue'}
       </Button>
+    )
+  }
+
+
+
+  const hoverMessage = () => {
+    let message = 'You must be logged in to do that!'
+
+    return (
+      <Alert variant='warning' className='warning'>
+        {message}
+      </Alert>
     )
   }
 
@@ -54,6 +86,9 @@ const TransactionSummary = ({quote, qty, confirm, handleSubmit, cancelOrder, for
           Cancel
         </Button>
         {continueOrSubmit()}
+        {
+          showHoverMsg ? hoverMessage() : null
+        }
       </div>
     </div>
   )
