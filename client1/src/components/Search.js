@@ -20,8 +20,8 @@ class Search extends React.Component {
       selectedStock: {},
       error: ''
     }
-  }
 
+  }
 
 
   searchSuggestion = (value) => {
