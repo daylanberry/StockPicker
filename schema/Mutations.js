@@ -62,7 +62,7 @@ const Mutations = new GraphQLObjectType({
 
         const addedStock = {name, ticker, price, qty, addedCost, user: req.user._id }
 
-        return Stock.insertStock(addedStock)
+        return Stock.updateOrInsertStock(addedStock)
       }
 
     }

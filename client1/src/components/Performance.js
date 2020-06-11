@@ -1,48 +1,51 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useQuery, useMutation } from '@apollo/react-hooks';
+import ADD_UPDATE_STOCK from '../mutations/AddUpdateStock'
+import GET_USER_STOCKS from '../queries/getUserStocks'
+import axios from 'axios'
 
-var socket;
-const ENDPOINT = ''
+const Performance = props =>  {
 
-class Performance extends React.Component {
-  constructor(props){
-    super(props)
+  const [stocks, setStocks] = useState([])
 
-    this.state = {}
+  const [updateStock] = useMutation(ADD_UPDATE_STOCK)
+  const { loading, error, data } = useQuery(GET_USER_STOCKS)
+
+  useEffect(() => {
+    updateAllStocks()
+  }, [data, loading])
+
+
+  const getData = (url, ticker) => {
+    return new Promise((resolve, reject) => {
+      axios.get(url)
+        .then((res) => resolve({...res.data, ticker}))
+    })
   }
 
+  const updateAllStocks = async () => {
 
-  ws = new WebSocket('wss://ws.finnhub.io?token=brcq3cvrh5rcn6su4hb0');
+    let updatedStocks = []
 
-  componentDidMount() {
-    //this.unsubscribe('BINANCE:BTCUSDT')
-    this.ws.onopen = () => {
+    if (!loading && data) {
+      let userStocks = data.getUserStock
 
-      this.ws.send(JSON.stringify({
-        'type': 'subscribe',
-        'symbol': 'ERI'
-      }))
+      userStocks.forEach(stock => {
+        updatedStocks.push(getData(`https://finnhub.io/api/v1/quote?symbol=${stock.ticker}&token=brcq3cvrh5rcn6su4hb0`, stock.ticker))
+      })
 
-      this.ws.onmessage = evt => {
-        console.log('hi')
-        console.log(evt)
-      }
+      Promise.all(updatedStocks)
+        .then(stockData => setStocks(stockData))
+
     }
   }
 
-  unsubscribe = (symbol) => {
-    this.ws.send(JSON.stringify({
-      'type': 'unsubscribe',
-      'symbol': symbol
-    }))
-  }
+  return (
+    <div>
+      Performance
+    </div>
+  )
 
-  render() {
-    return (
-      <div>
-        props
-      </div>
-    )
-  }
 }
 
 export default Performance

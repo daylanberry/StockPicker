@@ -14,10 +14,8 @@ const StockSchema = new Schema({
   }
 })
 
-StockSchema.statics.insertStock = async (stockObj) => {
+StockSchema.statics.updateOrInsertStock = async (stockObj) => {
   let addedCost = stockObj.price * stockObj.qty
-
-  console.log(stockObj)
 
   let stock = await Stock.findOne({
     user: stockObj.user,
