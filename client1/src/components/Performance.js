@@ -15,11 +15,23 @@ const Performance = props =>  {
     updateAllStocks()
   }, [data, loading])
 
+  useEffect(() => {
+    stocks.forEach(({ name, ticker, currentPrice})=> {
+      let stockObj = {
+        name,
+        ticker,
+        price: currentPrice,
+        qty: 0
+      }
+      updateStock({variables: stockObj})
+    })
+  }, [stocks])
 
-  const getData = (url, ticker) => {
+
+  const getData = (url, stock) => {
     return new Promise((resolve, reject) => {
       axios.get(url)
-        .then((res) => resolve({...res.data, ticker}))
+        .then((res) => resolve({...stock, currentPrice: res.data.c}))
     })
   }
 
@@ -31,12 +43,11 @@ const Performance = props =>  {
       let userStocks = data.getUserStock
 
       userStocks.forEach(stock => {
-        updatedStocks.push(getData(`https://finnhub.io/api/v1/quote?symbol=${stock.ticker}&token=brcq3cvrh5rcn6su4hb0`, stock.ticker))
+        updatedStocks.push(getData(`https://finnhub.io/api/v1/quote?symbol=${stock.ticker}&token=brcq3cvrh5rcn6su4hb0`, stock))
       })
 
       Promise.all(updatedStocks)
         .then(stockData => setStocks(stockData))
-
     }
   }
 
