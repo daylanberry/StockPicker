@@ -1,10 +1,14 @@
 import React, { useEffect } from 'react'
-import socketIOClient from 'socket.io-client'
 
 var socket;
 const ENDPOINT = ''
 
 class Performance extends React.Component {
+  constructor(props){
+    super(props)
+
+    this.state = {}
+  }
 
 
   ws = new WebSocket('wss://ws.finnhub.io?token=brcq3cvrh5rcn6su4hb0');
@@ -14,7 +18,8 @@ class Performance extends React.Component {
     this.ws.onopen = () => {
 
       this.ws.send(JSON.stringify({
-        'type': 'subscribe', 'symbol': 'ERI'
+        'type': 'subscribe',
+        'symbol': 'ERI'
       }))
 
       this.ws.onmessage = evt => {
