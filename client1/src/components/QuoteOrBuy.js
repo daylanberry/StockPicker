@@ -57,7 +57,7 @@ useEffect(() => {
       let stockObj = {
         name,
         ticker,
-        price: Number(formatNumber(price)),
+        price: Number(price.toFixed(2)),
         qty
       }
       updateStock({variables: stockObj})
