@@ -16,6 +16,7 @@ const Performance = props =>  {
   }, [data, loading])
 
   useEffect(() => {
+
     stocks.forEach(({ name, ticker, currentPrice})=> {
       let stockObj = {
         name,
