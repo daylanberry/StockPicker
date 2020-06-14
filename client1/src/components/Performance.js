@@ -15,6 +15,7 @@ const Performance = props =>  {
     updateAllStocks()
   }, [data, loading])
 
+  //updateds database
   useEffect(() => {
 
     stocks.forEach(({ name, ticker, currentPrice})=> {
@@ -27,6 +28,7 @@ const Performance = props =>  {
       updateStock({variables: stockObj})
     })
   }, [stocks])
+
 
 
   const getData = (url, stock) => {
