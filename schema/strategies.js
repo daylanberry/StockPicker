@@ -31,7 +31,8 @@ passport.use(new GoogleStrategy({
           var currentUser = new User({
             googleId: profile.id,
             username: profile.displayName,
-            email: profile.email
+            email: profile.email,
+            balance: 0
           })
           currentUser.save((err, user) => {
             return done(err, user)
@@ -67,10 +68,7 @@ passport.use(new LocalStrategy({usernameField: 'email'}, (email, password, done)
       return done(err)
     }
 
-    if (!user) {
-      return done(null, false)
-
-    } else if (user._id !== user.googleId) {
+    if (String(user._id) !== String(user.googleId)) {
       return done(null, false)
     }
 
@@ -88,7 +86,7 @@ var login = ({ email, password, req }) => {
   return new Promise((resolve, reject) => {
     passport.authenticate('local', (err, user) => {
       if (!user) {
-        reject('Invalid credentials')
+        reject('Invalid credentials!')
       } else {
         req.login(user, () => resolve(user))
       }
@@ -97,7 +95,7 @@ var login = ({ email, password, req }) => {
 }
 
 var signUp = ({ name, email, password }, req) => {
-  const newUser = new User({ email, password, name })
+  const newUser = new User({ email, password, name, balance: 0})
   newUser.googleId = newUser._id
   if (!email || !password) {
     throw new Error('You must provide an email and password!')

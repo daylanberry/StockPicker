@@ -153,7 +153,7 @@ class Search extends React.Component {
             ))
           }
           {
-            error.length ?  <ErrorMessage message={error}/> : null
+            error.length ?  <ErrorMessage error={error}/> : null
           }
         </div>
         {

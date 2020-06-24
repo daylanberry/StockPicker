@@ -2,11 +2,11 @@ import React from 'react'
 import { Alert } from 'react-bootstrap'
 
 
-const ErrorMessage = (props) => {
+const ErrorMessage = ({error}) => {
 
   return (
-    <Alert variant='secondary'>
-      {props.message}
+    <Alert style={{marginTop: '5px'}} variant='danger'>
+      {error}
     </Alert>
   )
 }

@@ -1,0 +1,23 @@
+.set-amount {
+  margin-left: 10px;
+  margin-top: 20px;
+}
+
+.bal-input-container {
+  display: flex;
+}
+
+.amount-title {
+  margin-right: 10px;
+  font-size: 20px;
+}
+
+.amount-input {
+  width: 300px;
+}
+
+.amount-error {
+  width: 55%;
+  margin-top: 10px;
+  margin-left: 85px
+}

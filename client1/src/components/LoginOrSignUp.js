@@ -25,7 +25,7 @@ const LoginOrSignUp = (props) => {
 
   const handleSubmit = (e, method) => {
     e.preventDefault()
-    const existing = props.existing
+    const { existing } = props
 
     if (!existing && password !== password2) {
       alert('passwords are not the same')
@@ -34,14 +34,13 @@ const LoginOrSignUp = (props) => {
       return
     }
     let func = existing ? loginUser : signUpUser
+    let endpoint = existing ? '/' : '/balance'
 
     func({
       variables: { email, password }
-    }).then(user => props.history.push('/'))
+    }).then(user => props.history.push(endpoint))
     .catch(res => {
-      console.log(res.graphQLErrors[0])
       const errors = res.graphQLErrors[0] ? res.graphQLErrors[0].message : 'Invalid Credentials!'
-
       return setErrors(errors)
     })
 

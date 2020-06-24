@@ -3,7 +3,7 @@ const StockType = require('./stockType')
 const mongoose = require('mongoose')
 const User = require('../../models/User')
 
-const { GraphQLObjectType, GraphQLString, GraphQLID, GraphQLList } = graphql
+const { GraphQLObjectType, GraphQLString, GraphQLInt } = graphql
 
 const userType = new GraphQLObjectType({
   name: 'CurrentUser',
@@ -17,12 +17,8 @@ const userType = new GraphQLObjectType({
     email: {
       type: GraphQLString
     },
-    stocks: {
-      type: new GraphQLList(StockType),
-      resolve(parent) {
-        return User.findById(parent.id)
-          .then(user => user.stocks)
-      }
+    balance: {
+      type: GraphQLInt
     }
   }
 })

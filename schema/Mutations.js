@@ -64,6 +64,18 @@ const Mutations = new GraphQLObjectType({
         return Stock.updateOrInsertStock(addedStock)
       }
 
+    },
+
+    setBalance: {
+      type: userType,
+      args: {
+        balance: { type: GraphQLFloat }
+      },
+      resolve(parent, { balance }, req) {
+        if (req.user) {
+          return User.getBalance(req.user._id, balance)
+        }
+      }
     }
 
   }

@@ -9,6 +9,7 @@ var user = new Schema({
   email: String,
   password: String,
   googleId: { type: String, unique: false },
+  balance: Number
 })
 
 
@@ -25,5 +26,16 @@ user.methods.validPassword = (password, userPassword) => {
   return bcrypt.compareSync(password, userPassword)
 }
 
+user.statics.getBalance = async (id, balance) => {
 
-module.exports = mongoose.model('User', user)
+  const user = await User.findById(id)
+  user.balance = balance
+
+  return user.save()
+
+}
+
+
+const User = mongoose.model('User', user)
+
+module.exports = User
