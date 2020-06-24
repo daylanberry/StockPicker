@@ -68,7 +68,10 @@ passport.use(new LocalStrategy({usernameField: 'email'}, (email, password, done)
     }
 
     if (!user) {
-      return done(null, false, 'Invalid Credentials')
+      return done(null, false)
+
+    } else if (user._id !== user.googleId) {
+      return done(null, false)
     }
 
     const match = user.validPassword(password, user.password)
@@ -95,6 +98,7 @@ var login = ({ email, password, req }) => {
 
 var signUp = ({ name, email, password }, req) => {
   const newUser = new User({ email, password, name })
+  newUser.googleId = newUser._id
   if (!email || !password) {
     throw new Error('You must provide an email and password!')
   }

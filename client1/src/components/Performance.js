@@ -7,6 +7,7 @@ import axios from 'axios'
 const Performance = props =>  {
 
   const [stocks, setStocks] = useState([])
+  const [balance, setBalance] = useState(0)
 
   const [updateStock] = useMutation(ADD_UPDATE_STOCK)
   const { loading, error, data } = useQuery(GET_USER_STOCKS)
@@ -15,7 +16,7 @@ const Performance = props =>  {
     updateAllStocks()
   }, [data, loading])
 
-  //updateds database
+  //updates database
   useEffect(() => {
 
     stocks.forEach(({ name, ticker, currentPrice})=> {
@@ -27,6 +28,7 @@ const Performance = props =>  {
       }
       updateStock({variables: stockObj})
     })
+
   }, [stocks])
 
 
@@ -56,7 +58,8 @@ const Performance = props =>  {
 
   return (
     <div>
-      Performance
+      <h3>Balances and Holdings</h3>
+      <span>Current Balance: </span>
     </div>
   )
 

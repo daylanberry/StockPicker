@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Button from 'react-bootstrap/Button';
+import { Button, Alert } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form'
 import './LoginOrSignUp.css'
 
@@ -39,6 +39,7 @@ const LoginOrSignUp = (props) => {
       variables: { email, password }
     }).then(user => props.history.push('/'))
     .catch(res => {
+      console.log(res.graphQLErrors[0])
       const errors = res.graphQLErrors[0] ? res.graphQLErrors[0].message : 'Invalid Credentials!'
 
       return setErrors(errors)
@@ -46,6 +47,7 @@ const LoginOrSignUp = (props) => {
 
     setEmail('')
     setPassword('')
+    setPassword2('')
     setErrors('')
 
   }
@@ -66,7 +68,12 @@ const LoginOrSignUp = (props) => {
   }
 
 
+  const errorMessage = () => {
 
+    if (errors.length) {
+      return <Alert className='signup-alert' variant='danger'>{errors}</Alert>
+    }
+  }
 
   return (
     <div className='signin-form row justify-content-center'>
@@ -105,9 +112,7 @@ const LoginOrSignUp = (props) => {
           </Button>
           <a href='auth/google' className='google'>Sign In with Google</a>
         </div>
-        {
-          errors ? errors: null
-        }
+        {errorMessage()}
       </Form>
     </div>
   )

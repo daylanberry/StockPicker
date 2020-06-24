@@ -21,7 +21,11 @@ const Header = (props) => {
   const messageButton = () => {
     const user = data ? data.currentUser : null
     if (!loading && user) {
-      return <Button onClick={logout}>Logout</Button>
+      return <Button onClick={() => {
+        logout()
+        props.history.push('/login')
+        }
+      }>Logout</Button>
     } else {
       return (
         <Button onClick={() => props.history.push('/login')}>Login</Button>
