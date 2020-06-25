@@ -59,7 +59,10 @@ const Performance = props =>  {
   return (
     <div>
       <h3>Balances and Holdings</h3>
-      <span>Current Balance: </span>
+      <div>
+        <span>Available to Trade: </span>
+        <span>Total Assets: </span>
+      </div>
     </div>
   )
 

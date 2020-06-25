@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { InputGroup, FormControl, Button, Alert } from 'react-bootstrap'
 
+import ADD_BALANCE from '../mutations/addBalance'
+import { useMutation } from '@apollo/react-hooks'
+
 import './SetAmount.css'
 
 const SetAmount = (props) => {
@@ -8,14 +11,20 @@ const SetAmount = (props) => {
   const [amount, setAmount] = useState('')
   const [error, setError] = useState('')
 
+  const [addBalance] = useMutation(ADD_BALANCE)
+
   const submitAmount = () => {
-    let balance = Number(amount)
+    let balance = parseFloat(amount)
 
     if (isNaN(balance)) {
       setError('This is not a valid number')
       return
     }
 
+    addBalance({
+      variables: { balance }
+    })
+    props.history.push('/')
 
   }
 

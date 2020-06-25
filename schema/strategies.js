@@ -32,7 +32,7 @@ passport.use(new GoogleStrategy({
             googleId: profile.id,
             username: profile.displayName,
             email: profile.email,
-            balance: 0
+            avalBalance: 0
           })
           currentUser.save((err, user) => {
             return done(err, user)

@@ -1,11 +1,22 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Table, Button, Alert } from 'react-bootstrap'
+
+import ErrorMessage from './ErrorMessage'
 import './TransactionSummary.css'
 import Loading from './Loading'
 
 const TransactionSummary = ({quote, qty, confirm, handleSubmit, cancelOrder, formatNumber, loadingSubmit, user}) => {
 
   const [ showHoverMsg, toggleShowHoverMsg ] = useState(false)
+  const [error, setError] = useState('')
+
+  useEffect(() => {
+    if (user) {
+      if (user.avalBalance < quote) {
+        setError('You need more funds')
+      }
+    }
+  }, [user])
 
   const continueOrSubmit = () => {
     let isDisabled = user ? false : true
@@ -23,10 +34,8 @@ const TransactionSummary = ({quote, qty, confirm, handleSubmit, cancelOrder, for
           &#128540;
           &#10060;
         </Button>
-    )
-
+      )
     }
-
     return (
       <Button
         onClick={handleSubmit}
@@ -38,17 +47,6 @@ const TransactionSummary = ({quote, qty, confirm, handleSubmit, cancelOrder, for
     )
   }
 
-
-
-  const hoverMessage = () => {
-    let message = 'You must be logged in to do that!'
-
-    return (
-      <Alert variant='warning' className='warning'>
-        {message}
-      </Alert>
-    )
-  }
 
   return (
     <div className='transaction'>
@@ -86,9 +84,12 @@ const TransactionSummary = ({quote, qty, confirm, handleSubmit, cancelOrder, for
         >
           Cancel
         </Button>
-        {continueOrSubmit()}
         {
-          showHoverMsg ? hoverMessage() : null
+          error.length ? <ErrorMessage error='you need more funds!' /> : continueOrSubmit()
+        }
+
+        {
+          showHoverMsg ? <ErrorMessage error='You must be logged in to do that!'/> : null
         }
       </div>
     </div>

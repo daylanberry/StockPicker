@@ -3,7 +3,7 @@ const StockType = require('./stockType')
 const mongoose = require('mongoose')
 const User = require('../../models/User')
 
-const { GraphQLObjectType, GraphQLString, GraphQLInt } = graphql
+const { GraphQLObjectType, GraphQLString, GraphQLFloat } = graphql
 
 const userType = new GraphQLObjectType({
   name: 'CurrentUser',
@@ -17,8 +17,8 @@ const userType = new GraphQLObjectType({
     email: {
       type: GraphQLString
     },
-    balance: {
-      type: GraphQLInt
+    avalBalance: {
+      type: GraphQLFloat
     }
   }
 })

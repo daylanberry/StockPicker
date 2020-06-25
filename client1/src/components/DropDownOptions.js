@@ -13,7 +13,7 @@ const DropDownOptions = () => {
       </Dropdown.Toggle>
 
       <Dropdown.Menu>
-        <Dropdown.Item href="/costBasis">Cost Basis</Dropdown.Item>
+        <Dropdown.Item href="/balance">Add Funds</Dropdown.Item>
         <Dropdown.Item href="/search">Search Stock</Dropdown.Item>
         <Dropdown.Item href="/performance">Performance</Dropdown.Item>
       </Dropdown.Menu>

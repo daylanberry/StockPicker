@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import './QuoteOrBuy.css'
 import TransactionSummary from './TransactionSummary'
+
 import { Button } from 'react-bootstrap'
 import SubmittedModal from './SubmittedModal'
 
 import { useMutation, useQuery } from '@apollo/react-hooks';
-
 import ADD_UPDATE_STOCK from '../mutations/AddUpdateStock'
 import CURRENT_USER from '../queries/currentUser'
 
@@ -20,14 +20,14 @@ const QuoteOrBuy = ({ formatNumber, price, name, ticker }) => {
   const [updateStock] = useMutation(ADD_UPDATE_STOCK)
   const {loading, error, data} = useQuery(CURRENT_USER)
 
-useEffect(() => {
-  const timer = setTimeout(() => {
-    setLoadingSubmit(false)
-    if (loadingSubmit) {
-      setSuccessModal(true)
-    }
-    newOrder()
-  }, 1000);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoadingSubmit(false)
+      if (loadingSubmit) {
+        setSuccessModal(true)
+      }
+      newOrder()
+    }, 1000);
 
   return () => clearTimeout(timer);
 }, [loadingSubmit]);

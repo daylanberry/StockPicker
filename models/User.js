@@ -9,7 +9,7 @@ var user = new Schema({
   email: String,
   password: String,
   googleId: { type: String, unique: false },
-  balance: Number
+  avalBalance: Number
 })
 
 
@@ -29,12 +29,12 @@ user.methods.validPassword = (password, userPassword) => {
 user.statics.getBalance = async (id, balance) => {
 
   const user = await User.findById(id)
-  user.balance = balance
+
+  user.avalBalance += balance
 
   return user.save()
 
 }
-
 
 const User = mongoose.model('User', user)
 

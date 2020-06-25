@@ -6,6 +6,7 @@ const CURRENT_USER = gql`
       id
       name
       email
+      avalBalance
     }
   }
 `
