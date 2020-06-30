@@ -19,6 +19,9 @@ const userType = new GraphQLObjectType({
     },
     avalBalance: {
       type: GraphQLFloat
+    },
+    assets: {
+      type: GraphQLFloat
     }
   }
 })

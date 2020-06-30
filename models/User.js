@@ -43,7 +43,20 @@ user.statics.setBalance = async (id, balance) => {
 user.statics.updateBalance = async (id) => {
   const userStocks = await Stock.find({user: id})
 
-  console.log(userStocks)
+  const stockHoldings = userStocks.reduce((acc, curr) => {
+    let stockAmount = +Number(curr.currentPrice * curr.qty).toFixed(2)
+    acc += stockAmount
+    return acc
+  }, 0)
+
+
+  let currentUser = await User.findById(id)
+
+  let assets = stockHoldings + currentUser.avalBalance
+  currentUser.assets = assets
+
+  return currentUser.save()
+
 }
 
 

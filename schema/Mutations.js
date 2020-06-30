@@ -77,8 +77,14 @@ const Mutations = new GraphQLObjectType({
           return User.setBalance(req.user._id, balance)
         }
       }
-    }
+    },
 
+    updateUserAssets: {
+      type: userType,
+      resolve(parent, args, req) {
+        return User.updateBalance(req.user._id)
+      }
+    }
   }
 })
 

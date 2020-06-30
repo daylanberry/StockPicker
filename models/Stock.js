@@ -35,7 +35,6 @@ StockSchema.statics.updateOrInsertStock = async (stockObj) => {
     stock.totalCost = totalCost
     stock.currentPrice = stockObj.price
     stock.costPerShare = Number((totalCost / updatedQty).toFixed(2))
-
     return stock.save()
   }
 

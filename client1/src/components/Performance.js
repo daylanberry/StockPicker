@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import ADD_UPDATE_STOCK from '../mutations/AddUpdateStock'
 import GET_USER_STOCKS from '../queries/getUserStocks'
+import UPDATE_USER_ASSETS from '../mutations/updateUserAssets'
 import axios from 'axios'
 
 const Performance = props =>  {
@@ -10,6 +11,7 @@ const Performance = props =>  {
   const [balance, setBalance] = useState(0)
 
   const [updateStock] = useMutation(ADD_UPDATE_STOCK)
+  const [updateUserAssets] = useMutation(UPDATE_USER_ASSETS)
   const { loading, error, data } = useQuery(GET_USER_STOCKS)
 
   useEffect(() => {
