@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 
-const ADD_BALANCE = gql`
+const SET_AVAILABLE_BALANCE = gql`
   mutation SetBalance($balance: Float) {
     setBalance(balance: $balance) {
       email
@@ -11,4 +11,4 @@ const ADD_BALANCE = gql`
   }
 `
 
-export default ADD_BALANCE
+export default SET_AVAILABLE_BALANCE

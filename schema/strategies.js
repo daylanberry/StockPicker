@@ -32,7 +32,8 @@ passport.use(new GoogleStrategy({
             googleId: profile.id,
             username: profile.displayName,
             email: profile.email,
-            avalBalance: 0
+            avalBalance: 0,
+            assets: 0
           })
           currentUser.save((err, user) => {
             return done(err, user)
@@ -95,7 +96,13 @@ var login = ({ email, password, req }) => {
 }
 
 var signUp = ({ name, email, password }, req) => {
-  const newUser = new User({ email, password, name, balance: 0})
+  const newUser = new User({
+    email,
+    password,
+    name,
+    avalBalance: 0,
+    assets: 0
+  })
   newUser.googleId = newUser._id
   if (!email || !password) {
     throw new Error('You must provide an email and password!')

@@ -35,12 +35,28 @@ const Header = (props) => {
 
   }
 
+  const renderBalance = () => {
+    if (data) {
+      if (data.currentUser) {
+        return (
+          <span className='funds-info'>Availabe to Trade: ${data.currentUser.avalBalance}</span>
+        )
+      }
+    }
+  }
+
   return (
     <div>
     <Navbar bg="dark" variant="dark">
       <Nav className="mr-auto justify-content">
         <Link className='home' to='/'>Home</Link>
         <DropDownOptions />
+
+        {
+          renderBalance()
+        }
+
+
       </Nav>
         <Form inline className='nav-selections'>
         {messageButton()}

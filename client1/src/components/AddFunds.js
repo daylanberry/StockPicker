@@ -1,17 +1,31 @@
 import React, { useState, useEffect } from 'react'
 import { InputGroup, FormControl, Button, Alert } from 'react-bootstrap'
 
-import ADD_BALANCE from '../mutations/addBalance'
-import { useMutation } from '@apollo/react-hooks'
+import ErrorMessage from './ErrorMessage'
 
-import './SetAmount.css'
+import SET_AVAILABLE_BALANCE from '../mutations/setAvailableBal'
+import { useMutation, useQuery } from '@apollo/react-hooks'
+import CURRENT_USER from '../queries/currentUser'
+
+import './AddFunds.css'
 
 const SetAmount = (props) => {
 
   const [amount, setAmount] = useState('')
   const [error, setError] = useState('')
+  const { data, loading } = useQuery(CURRENT_USER)
 
-  const [addBalance] = useMutation(ADD_BALANCE)
+  const [setAvailableBal] = useMutation(SET_AVAILABLE_BALANCE)
+
+  useEffect(() => {
+    if (data) {
+      if (!data.currentUser && !loading) {
+        setError('You need to be logged in')
+      } else {
+        setError('')
+      }
+    }
+  }, [data])
 
   const submitAmount = () => {
     let balance = parseFloat(amount)
@@ -21,10 +35,15 @@ const SetAmount = (props) => {
       return
     }
 
-    addBalance({
-      variables: { balance }
-    })
-    props.history.push('/')
+    if (data) {
+      if (data.currentUser) {
+        setAvailableBal({
+          variables: { balance }
+        })
+
+        props.history.push('/')
+      }
+    }
 
   }
 
@@ -56,9 +75,17 @@ const SetAmount = (props) => {
           Trade!
         </Button>
       </div>
-      {
-        error.length ? <Alert className='amount-error' variant='danger'>{error}</Alert> : null
-      }
+      <div >
+        {
+          error.length ? (
+            <div className='amount-error'>
+              <ErrorMessage error={error}>
+              </ErrorMessage>
+            </div>
+          )
+          : null
+        }
+      </div>
 
     </div>
   )

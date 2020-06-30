@@ -7,6 +7,7 @@ import SubmittedModal from './SubmittedModal'
 
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import ADD_UPDATE_STOCK from '../mutations/AddUpdateStock'
+import SET_AVAILABLE_BALANCE from '../mutations/setAvailableBal'
 import CURRENT_USER from '../queries/currentUser'
 
 const QuoteOrBuy = ({ formatNumber, price, name, ticker }) => {
@@ -18,6 +19,7 @@ const QuoteOrBuy = ({ formatNumber, price, name, ticker }) => {
   const [loadingSubmit, setLoadingSubmit] = useState(false)
 
   const [updateStock] = useMutation(ADD_UPDATE_STOCK)
+  const [setAvailableBal] = useMutation(SET_AVAILABLE_BALANCE)
   const {loading, error, data} = useQuery(CURRENT_USER)
 
   useEffect(() => {
@@ -48,6 +50,8 @@ const QuoteOrBuy = ({ formatNumber, price, name, ticker }) => {
   }
 
   const handleSubmit = () => {
+    let currentPrice = Number(price.toFixed(2))
+    let subtractFromAvailable = -(currentPrice * qty)
 
     if (!confirm) {
       toggleConfirm(true)
@@ -57,10 +61,11 @@ const QuoteOrBuy = ({ formatNumber, price, name, ticker }) => {
       let stockObj = {
         name,
         ticker,
-        price: Number(price.toFixed(2)),
+        price: currentPrice,
         qty
       }
       updateStock({variables: stockObj})
+      setAvailableBal({variables: {balance: subtractFromAvailable}})
       setLoadingSubmit(true)
     }
   }

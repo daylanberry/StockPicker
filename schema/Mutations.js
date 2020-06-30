@@ -8,7 +8,14 @@ const User = mongoose.model('User')
 const Stock = mongoose.model('Stock')
 const StockSchema = require('../models/Stock')
 
+const cheerio = require('cheerio')
+
 const { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLFloat } = graphql
+
+const fetchStock = async () => {
+  const result = await axios.get('https://finance.yahoo.com/quote/ERI')
+  return cheerio.load(result.data)
+}
 
 
 const Mutations = new GraphQLObjectType({
@@ -73,12 +80,27 @@ const Mutations = new GraphQLObjectType({
       },
       resolve(parent, { balance }, req) {
         if (req.user) {
-          return User.getBalance(req.user._id, balance)
+          return User.setBalance(req.user._id, balance)
         }
+      }
+    },
+
+    getStock: {
+      type: stockType,
+      resolve(parent){
+        fetchStock()
+          .then(stock => {
+
+            let text = stock("#quote-market-notice").parent().children('span').first().text()
+            console.log(text)
+          })
+          .catch(err => console.log(err))
       }
     }
 
   }
 })
+
+
 
 module.exports = Mutations

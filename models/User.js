@@ -9,7 +9,8 @@ var user = new Schema({
   email: String,
   password: String,
   googleId: { type: String, unique: false },
-  avalBalance: Number
+  avalBalance: Number,
+  assets: Number
 })
 
 
@@ -26,15 +27,25 @@ user.methods.validPassword = (password, userPassword) => {
   return bcrypt.compareSync(password, userPassword)
 }
 
-user.statics.getBalance = async (id, balance) => {
+user.statics.setBalance = async (id, balance) => {
 
   const user = await User.findById(id)
 
-  user.avalBalance += balance
+  let newBalance = +Number(user.avalBalance + balance).toFixed(2)
+  let assetBalance = +Number(user.assets + balance).toFixed(2)
+  user.avalBalance = newBalance
+  user.assets = assetBalance
 
   return user.save()
 
 }
+
+user.statics.updateBalance = async (id) => {
+  const userStocks = await Stock.find({user: id})
+
+  console.log(userStocks)
+}
+
 
 const User = mongoose.model('User', user)
 

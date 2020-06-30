@@ -60,7 +60,6 @@ const Performance = props =>  {
     <div>
       <h3>Balances and Holdings</h3>
       <div>
-        <span>Available to Trade: </span>
         <span>Total Assets: </span>
       </div>
     </div>

@@ -76,6 +76,7 @@ const TransactionSummary = ({quote, qty, confirm, handleSubmit, cancelOrder, for
         </Table>
     </div>
 
+
       <div className='transaction-buttons'>
         <Button
           className='cancel-btn'
