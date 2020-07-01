@@ -4,8 +4,7 @@ import { InputGroup, FormControl, Button, Alert } from 'react-bootstrap'
 import ErrorMessage from './ErrorMessage'
 
 import SET_AVAILABLE_BALANCE from '../mutations/setAvailableBal'
-import { useMutation, useQuery } from '@apollo/react-hooks'
-import CURRENT_USER from '../queries/currentUser'
+import { useMutation } from '@apollo/react-hooks'
 
 import './AddFunds.css'
 
@@ -13,19 +12,19 @@ const SetAmount = (props) => {
 
   const [amount, setAmount] = useState('')
   const [error, setError] = useState('')
-  const { data, loading } = useQuery(CURRENT_USER)
+  const [user, setUser] = useState({})
 
   const [setAvailableBal] = useMutation(SET_AVAILABLE_BALANCE)
 
   useEffect(() => {
-    if (data) {
-      if (!data.currentUser && !loading) {
+    if (props.data) {
+      if (!props.data.currentUser) {
         setError('You need to be logged in')
       } else {
         setError('')
       }
     }
-  }, [data])
+  }, [user])
 
   const submitAmount = () => {
     let balance = parseFloat(amount)
@@ -35,8 +34,8 @@ const SetAmount = (props) => {
       return
     }
 
-    if (data) {
-      if (data.currentUser) {
+    if (props.data) {
+      if (props.data.currentUser) {
         setAvailableBal({
           variables: { balance }
         })

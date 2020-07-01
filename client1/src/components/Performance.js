@@ -6,6 +6,8 @@ import ADD_UPDATE_STOCK from '../mutations/AddUpdateStock'
 import UPDATE_USER_ASSETS from '../mutations/updateUserAssets'
 import axios from 'axios'
 
+import AssetTable from './AssetTable'
+
 
 const Performance = props =>  {
 
@@ -23,6 +25,7 @@ const Performance = props =>  {
 
   }, [data, loading])
 
+
   //updates database
   useEffect(() => {
 
@@ -38,7 +41,6 @@ const Performance = props =>  {
     })
 
   }, [stocks])
-
 
 
   const getData = (url, stock) => {
@@ -64,11 +66,28 @@ const Performance = props =>  {
     }
   }
 
+  const displayAssets = () => {
+
+    if (data1) {
+      if (data1.currentUser) {
+        return <span>${data1.currentUser.assets}</span>
+      }
+    } else {
+      return <span>Loading...</span>
+    }
+  }
+
+
+
   return (
     <div>
       <h3>Balances and Holdings</h3>
       <div>
-        <span>Total Assets: </span>
+        <span>Total Assets: {displayAssets()} </span>
+        <AssetTable
+          stocks={stocks}
+          user={data1}
+        />
       </div>
     </div>
   )

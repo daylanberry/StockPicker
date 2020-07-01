@@ -4,6 +4,7 @@ import { Table, Button, Alert } from 'react-bootstrap'
 import ErrorMessage from './ErrorMessage'
 import './TransactionSummary.css'
 import Loading from './Loading'
+import * as helpers from './utils'
 
 const TransactionSummary = ({quote, qty, confirm, handleSubmit, cancelOrder, formatNumber, loadingSubmit, user}) => {
 
@@ -61,7 +62,7 @@ const TransactionSummary = ({quote, qty, confirm, handleSubmit, cancelOrder, for
           <tbody>
             <tr>
               <td>Amount:</td>
-              <td>${formatNumber(quote)}</td>
+              <td>${helpers.numberFormatter(quote)}</td>
             </tr>
           </tbody>
         </Table>

@@ -2,6 +2,7 @@ import React from 'react'
 import './StockInfo.css'
 import StockStats from './StockStats'
 import QuoteOrBuy from './QuoteOrBuy'
+import * as helpers from './utils'
 
 import { Card } from 'react-bootstrap'
 
@@ -11,14 +12,10 @@ class StockInfo extends React.Component {
 
   }
 
-  numberWithCommas = (n) => {
-    const num = parseFloat(n).toFixed(2)
-    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-  }
 
   priceFormater = (price, change) => {
 
-    const formatedPrice = this.numberWithCommas(price)
+    const formatedPrice = helpers.numberFormatter(price)
 
     let changeToNum = parseFloat(change).toFixed(2)
     let name = parseInt(change) > 0 ? 'positive': 'negative'
@@ -59,12 +56,11 @@ class StockInfo extends React.Component {
           <Card.Title>Stock Information</Card.Title>
 
             <StockStats
-              formatNumber={this.numberWithCommas}
+              formatNumber={helpers.numberFormatter}
               {...this.props.stock}
             />
             <QuoteOrBuy
               price={Number(price)}
-              formatNumber={this.numberWithCommas}
               name={name}
               ticker={symbol}
             />

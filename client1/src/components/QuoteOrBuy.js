@@ -10,13 +10,14 @@ import ADD_UPDATE_STOCK from '../mutations/AddUpdateStock'
 import SET_AVAILABLE_BALANCE from '../mutations/setAvailableBal'
 import CURRENT_USER from '../queries/currentUser'
 
-const QuoteOrBuy = ({ formatNumber, price, name, ticker }) => {
+const QuoteOrBuy = ({ price, name, ticker }) => {
 
   const [confirm, toggleConfirm] = useState(false)
   const [successModal, setSuccessModal] = useState(false)
   const [qty, setQty] = useState(0)
   const [quotedAmount, setQuotedAmount] = useState(0)
   const [loadingSubmit, setLoadingSubmit] = useState(false)
+  const [user, setUser] = useState({})
 
   const [updateStock] = useMutation(ADD_UPDATE_STOCK)
   const [setAvailableBal] = useMutation(SET_AVAILABLE_BALANCE)
@@ -110,7 +111,6 @@ const QuoteOrBuy = ({ formatNumber, price, name, ticker }) => {
           confirm={confirm}
           handleSubmit={handleSubmit}
           cancelOrder={newOrder}
-          formatNumber={formatNumber}
           loadingSubmit={loadingSubmit}
           user={data ? data.currentUser : null}
         /> :

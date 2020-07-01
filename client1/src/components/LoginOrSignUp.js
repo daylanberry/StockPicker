@@ -7,6 +7,7 @@ import LOGIN_USER from '../mutations/loginUser'
 import SIGN_UP from '../mutations/signUpUser'
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import CURRENT_USER from '../queries/currentUser'
+import { client } from '../index'
 
 const LoginOrSignUp = (props) => {
 
