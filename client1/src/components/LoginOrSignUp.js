@@ -5,9 +5,8 @@ import './LoginOrSignUp.css'
 
 import LOGIN_USER from '../mutations/loginUser'
 import SIGN_UP from '../mutations/signUpUser'
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation, useQuery } from '@apollo/react-hooks';
 import CURRENT_USER from '../queries/currentUser'
-
 
 const LoginOrSignUp = (props) => {
 
@@ -16,11 +15,14 @@ const LoginOrSignUp = (props) => {
   const [password2, setPassword2] = useState('')
   const [errors, setErrors] = useState('')
 
+  const { data, loading } = useQuery(CURRENT_USER)
+
   const [loginUser] = useMutation(LOGIN_USER, {
     refetchQueries: [{query: CURRENT_USER }]
   })
+
   const [signUpUser] = useMutation(SIGN_UP, {
-    refetchQueries: [{query: CURRENT_USER}]
+    refetchQueries: [{query: CURRENT_USER}],
   })
 
   const handleSubmit = (e, method) => {

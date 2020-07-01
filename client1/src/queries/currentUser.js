@@ -4,9 +4,9 @@ const CURRENT_USER = gql`
   query {
     currentUser {
       id
-      name
       email
       avalBalance
+      assets
     }
   }
 `

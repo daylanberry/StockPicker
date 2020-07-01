@@ -55,6 +55,8 @@ user.statics.updateBalance = async (id) => {
   let assets = stockHoldings + currentUser.avalBalance
   currentUser.assets = assets
 
+  console.log(assets)
+
   return currentUser.save()
 
 }

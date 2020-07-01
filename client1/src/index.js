@@ -9,19 +9,20 @@ import ApolloClient from 'apollo-boost'
 import { ApolloProvider } from '@apollo/react-hooks'
 import { InMemoryCache } from 'apollo-client-preset'
 
+import CURRENT_USER from './queries/currentUser'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-const cache = new InMemoryCache({
+export const cache = new InMemoryCache({
   dataIdFromObject: o => o.id
 })
 
-const client = new ApolloClient({
+
+export const client = new ApolloClient({
   uri: 'http://localhost:5010/graphql',
   credentials: 'include',
   cache
 })
-
 
 
 ReactDOM.render(
