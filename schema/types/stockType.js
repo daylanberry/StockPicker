@@ -23,7 +23,9 @@ const stockType = new GraphQLObjectType({
     currentPrice: {
       type: GraphQLFloat
     },
-
+    id: {
+      type: GraphQLString
+    }
   }
 })
 

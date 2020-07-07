@@ -7,8 +7,9 @@ const GET_USER_STOCKS = gql`
       ticker,
       costPerShare,
       qty,
-      totalCost
-      currentPrice
+      totalCost,
+      currentPrice,
+      id
     }
   }
 `

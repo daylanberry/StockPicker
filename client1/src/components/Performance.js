@@ -6,6 +6,8 @@ import ADD_UPDATE_STOCK from '../mutations/AddUpdateStock'
 import UPDATE_USER_ASSETS from '../mutations/updateUserAssets'
 import axios from 'axios'
 
+import * as helpers from './utils'
+
 import AssetTable from './AssetTable'
 
 
@@ -14,16 +16,19 @@ const Performance = props =>  {
   const [stocks, setStocks] = useState([])
   const [balance, setBalance] = useState(0)
 
-  const [updateStock] = useMutation(ADD_UPDATE_STOCK)
-  const [updateUserAssets] = useMutation(UPDATE_USER_ASSETS)
+  const [updateStock] = useMutation(ADD_UPDATE_STOCK);
+  const [updateUserAssets] = useMutation(UPDATE_USER_ASSETS, {
+    refetchQueries: [{query: CURRENT_USER}]
+  })
 
   const { loading, error, data } = useQuery(GET_USER_STOCKS)
   const { loading: loading1, error: error1, data: data1 } = useQuery(CURRENT_USER)
 
   useEffect(() => {
     updateAllStocks()
+    updateUserAssets()
 
-  }, [data, loading])
+  }, [data, data1, loading])
 
 
   //updates database
@@ -37,7 +42,7 @@ const Performance = props =>  {
         qty: 0
       }
       updateStock({variables: stockObj})
-      updateUserAssets()
+
     })
 
   }, [stocks])
@@ -70,7 +75,7 @@ const Performance = props =>  {
 
     if (data1) {
       if (data1.currentUser) {
-        return <span>${data1.currentUser.assets}</span>
+        return <span>${helpers.numberFormatter(data1.currentUser.assets)}</span>
       }
     } else {
       return <span>Loading...</span>

@@ -1,5 +1,5 @@
 import React from 'react'
-
+import * as helpers from './utils'
 
 const StockSummaryEntry = ({stock: {name, currentPrice, ticker, costPerShare, qty, totalCost}}) => {
 
@@ -21,7 +21,8 @@ const StockSummaryEntry = ({stock: {name, currentPrice, ticker, costPerShare, qt
       <td>${currentPrice}</td>
       <td>${costPerShare}</td>
       <td>{qty}</td>
-      <td>${currentPrice * qty}</td>
+      <td>alot</td>
+      <td>${helpers.numberFormatter(currentPrice * qty)}</td>
       <td><button>Transact</button></td>
     </tr>
 

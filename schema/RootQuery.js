@@ -30,6 +30,7 @@ const RootQuery = new GraphQLObjectType({
     getUserStock: {
       type: new GraphQLList(stockType),
       resolve(parent, args, req) {
+        console.log('hello')
 
         return Stock.find({user: req.user._id})
           .then(stock => stock)

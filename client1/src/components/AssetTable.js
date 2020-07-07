@@ -1,6 +1,7 @@
 import React from 'react'
 import { Table } from 'react-bootstrap'
 import StockSummaryEntry from './StockSummaryEntry'
+import * as helpers from './utils'
 
 import './AssetTable.css'
 
@@ -9,7 +10,11 @@ const AssetTable = ({stocks, user}) => {
   const totalCalc = () => {
     if (user) {
       const { currentUser } = user
-      return currentUser.assets - currentUser.avalBalance
+      let totalBalance = stocks.reduce((acc, curr) => {
+        return acc + curr.currentPrice * curr.qty
+      }, 0)
+
+      return helpers.numberFormatter(totalBalance)
     }
   }
 
@@ -21,6 +26,7 @@ const AssetTable = ({stocks, user}) => {
           <th>Current Price</th>
           <th>Cost Per Share</th>
           <th>Quantity</th>
+          <th>Gain/Loss</th>
           <th>Current Balance</th>
           <th>Buy/Sell</th>
         </tr>
@@ -30,7 +36,10 @@ const AssetTable = ({stocks, user}) => {
         {
           stocks.length ? (
             stocks.map((stock, i) => (
-              <StockSummaryEntry stock={stock} key={i}/>
+              <StockSummaryEntry
+                stock={stock}
+                key={i}
+              />
             ))
           ) : null
         }
@@ -41,6 +50,7 @@ const AssetTable = ({stocks, user}) => {
               Total
             </span>
           </td>
+          <td></td>
           <td></td>
           <td></td>
           <td></td>
