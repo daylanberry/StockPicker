@@ -18,19 +18,17 @@ const StockSummaryEntry = ({history, stock: {name, currentPrice, ticker, costPer
 
   const quoteOrBuyScreen = (input) => {
 
-    if (input === 'buy') {
-
-      history.push({
-        pathname: `/search`,
-        state: {
-          stock: {
-            name,
-            price: currentPrice,
-            ticker
-          }
-        }
-      })
-    }
+    history.push({
+      pathname: `/search`,
+      state: {
+        stock: {
+          name,
+          price: currentPrice,
+          ticker
+        },
+        buy: input
+      }
+    })
   }
 
   return (
@@ -59,8 +57,8 @@ const StockSummaryEntry = ({history, stock: {name, currentPrice, ticker, costPer
           </Dropdown.Toggle>
 
           <Dropdown.Menu>
-            <Dropdown.Item onClick={() => quoteOrBuyScreen('buy')}>Buy</Dropdown.Item>
-            <Dropdown.Item href="#/action-2">Sell</Dropdown.Item>
+            <Dropdown.Item onClick={() => quoteOrBuyScreen(true)}>Buy</Dropdown.Item>
+            <Dropdown.Item onClick={() => quoteOrBuyScreen(false)}>Sell</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </td>

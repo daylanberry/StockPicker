@@ -19,9 +19,13 @@ class Search extends React.Component {
       clickedSuggestion: false,
       selectedStock: {},
       error: '',
-      buyMore: false
+      buy: true
     }
 
+  }
+
+  toggleBuy = () => {
+    this.setState({buy: !this.state.buy})
   }
 
   componentDidMount() {
@@ -30,18 +34,20 @@ class Search extends React.Component {
 
     if (routerState) {
 
+      const { buy } = this.props.location.state
+
       let moreStockObj = {
         name: routerState.stock.name,
         price: routerState.stock.price,
         symbol: routerState.stock.ticker,
-        buyMore: true
       }
 
       this.setState({
         ticker: routerState.stock.ticker,
         name: routerState.stock.name,
-        selectedStock: moreStockObj
-      }, () => this.getStockInfo())
+        selectedStock: moreStockObj,
+        buy
+      }, () => this.getStockInfo(moreStockObj.price))
 
     }
 
@@ -109,10 +115,10 @@ class Search extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    this.getStockInfo()
+    this.getStockInfo(null)
   }
 
-  getStockInfo = () => {
+  getStockInfo = (buyMorePrice=null) => {
     const {
       ticker,
       name
@@ -144,6 +150,11 @@ class Search extends React.Component {
 
         for (var prop in stockObj) {
           var description = prop.split(' ')[1]
+          if (description === 'price' && buyMorePrice) {
+            selectedStock[description] = buyMorePrice
+            continue;
+          };
+
           selectedStock[description] = stockObj[prop]
         }
 
@@ -151,13 +162,13 @@ class Search extends React.Component {
           selectedStock,
           suggestions: [],
           error: ''
-        }, () => this.getAdditionalInfo())
+        }, () => this.getAdditionalInfo(null))
       })
   }
 
 
   render() {
-    const { ticker, suggestions, selectedStock, name, error, buyMore } = this.state
+    const { ticker, suggestions, selectedStock, name, error, buy } = this.state
 
     return (
       <div className={`stock-info`}>
@@ -190,7 +201,9 @@ class Search extends React.Component {
           selectedStock.symbol === ticker ?
           <StockInfo
             name={name}
+            buy={buy}
             stock={selectedStock}
+            toggle={this.toggleBuy}
           />
           : null
         }

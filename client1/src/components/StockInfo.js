@@ -4,14 +4,9 @@ import StockStats from './StockStats'
 import QuoteOrBuy from './QuoteOrBuy'
 import * as helpers from './utils'
 
-import { Card } from 'react-bootstrap'
+import { Card, Dropdown } from 'react-bootstrap'
 
 class StockInfo extends React.Component {
-  constructor(props) {
-    super(props)
-
-  }
-
 
   priceFormater = (price, change) => {
 
@@ -38,7 +33,7 @@ class StockInfo extends React.Component {
   render() {
 
     const { change, latest, price, symbol } = this.props.stock
-    const { name } = this.props
+    const { name, buy, toggle } = this.props
 
     return (
       <div>
@@ -56,7 +51,25 @@ class StockInfo extends React.Component {
         {this.priceFormater(price, change)}
 
         <Card.Body>
-          <Card.Title>Stock Information</Card.Title>
+          <Card.Title style={{display: 'flex', justifyContent: 'center'}}>
+            <span style={{fontWeight: '2', marginTop: '5px'}}>
+              Transaction Type:
+            </span>
+
+            <Dropdown style={{marginLeft: '10px', marginBottom: '6px'}}>
+            <Dropdown.Toggle variant="primary">
+              {buy ? 'Buy' : 'Sell'}
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu>
+              <Dropdown.Item onClick={() => toggle()}>
+                {!buy ? 'Buy' : 'Sell'}
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+
+
+          </Card.Title>
 
           {
             change ?
@@ -69,7 +82,9 @@ class StockInfo extends React.Component {
             <QuoteOrBuy
               price={Number(price)}
               name={name}
+              buy={buy}
               ticker={symbol}
+              toggle={toggle}
             />
 
         </Card.Body>

@@ -6,14 +6,14 @@ import './TransactionSummary.css'
 import Loading from './Loading'
 import * as helpers from './utils'
 
-const TransactionSummary = ({quote, qty, confirm, handleSubmit, cancelOrder, formatNumber, loadingSubmit, user}) => {
+const TransactionSummary = ({quote, qty, confirm, handleSubmit, cancelOrder, formatNumber, loadingSubmit, user, buy}) => {
 
   const [ showHoverMsg, toggleShowHoverMsg ] = useState(false)
   const [error, setError] = useState('')
 
   useEffect(() => {
     if (user) {
-      if (user.avalBalance < quote) {
+      if (user.avalBalance < quote && buy) {
         setError('You need more funds')
       }
     }

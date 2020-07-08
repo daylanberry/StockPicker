@@ -6,11 +6,11 @@ import { Button } from 'react-bootstrap'
 import SubmittedModal from './SubmittedModal'
 
 import { useMutation, useQuery } from '@apollo/react-hooks';
-import ADD_UPDATE_STOCK from '../mutations/AddUpdateStock'
+import ADD_UPDATE_STOCK from '../mutations/addUpdateStock'
 import SET_AVAILABLE_BALANCE from '../mutations/setAvailableBal'
 import CURRENT_USER from '../queries/currentUser'
 
-const QuoteOrBuy = ({ price, name, ticker }) => {
+const QuoteOrBuy = ({ price, name, ticker, buy, toggle }) => {
 
   const [confirm, toggleConfirm] = useState(false)
   const [successModal, setSuccessModal] = useState(false)
@@ -19,7 +19,7 @@ const QuoteOrBuy = ({ price, name, ticker }) => {
   const [loadingSubmit, setLoadingSubmit] = useState(false)
   const [user, setUser] = useState({})
 
-  const [updateStock] = useMutation(ADD_UPDATE_STOCK)
+  const [addUpdateStock] = useMutation(ADD_UPDATE_STOCK)
   const [setAvailableBal] = useMutation(SET_AVAILABLE_BALANCE)
   const {loading, error, data} = useQuery(CURRENT_USER)
 
@@ -52,7 +52,7 @@ const QuoteOrBuy = ({ price, name, ticker }) => {
 
   const handleSubmit = () => {
     let currentPrice = Number(price.toFixed(2))
-    let subtractFromAvailable = -(currentPrice * qty)
+    let addOrSubtractFromAvailable = buy ? -(currentPrice * qty) : currentPrice * qty
 
     if (!confirm) {
       toggleConfirm(true)
@@ -63,12 +63,19 @@ const QuoteOrBuy = ({ price, name, ticker }) => {
         name,
         ticker,
         price: currentPrice,
-        qty
+        qty: buy ? qty : -qty
       }
-      updateStock({variables: stockObj})
-      setAvailableBal({variables: {balance: subtractFromAvailable}})
+
+      if (buy) {
+        addUpdateStock({variables: stockObj})
+      } else {
+
+      }
+
+      setAvailableBal({variables: {balance: addOrSubtractFromAvailable}})
       setLoadingSubmit(true)
     }
+
   }
 
   const newOrder = () => {
@@ -100,7 +107,11 @@ const QuoteOrBuy = ({ price, name, ticker }) => {
             onChange={handleChange}
           />
         </div>
-          <Button onClick={calculatePrice}>Get Quote</Button>
+        <Button onClick={calculatePrice}>
+          {
+            buy ? 'Get Quote' : 'Sell Shares'
+          }
+        </Button>
       </div>
 
       {
@@ -112,6 +123,7 @@ const QuoteOrBuy = ({ price, name, ticker }) => {
           handleSubmit={handleSubmit}
           cancelOrder={newOrder}
           loadingSubmit={loadingSubmit}
+          buy={buy}
           user={data ? data.currentUser : null}
         /> :
         null
