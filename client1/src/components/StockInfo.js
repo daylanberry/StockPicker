@@ -40,8 +40,6 @@ class StockInfo extends React.Component {
     const { change, latest, price, symbol } = this.props.stock
     const { name } = this.props
 
-    console.log(change)
-
     return (
       <div>
       <Card className='stockInfo'>

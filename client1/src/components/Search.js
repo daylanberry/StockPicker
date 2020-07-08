@@ -18,7 +18,8 @@ class Search extends React.Component {
       suggestions: [],
       clickedSuggestion: false,
       selectedStock: {},
-      error: ''
+      error: '',
+      buyMore: false
     }
 
   }
@@ -32,14 +33,15 @@ class Search extends React.Component {
       let moreStockObj = {
         name: routerState.stock.name,
         price: routerState.stock.price,
-        symbol: routerState.stock.ticker
+        symbol: routerState.stock.ticker,
+        buyMore: true
       }
 
       this.setState({
         ticker: routerState.stock.ticker,
         name: routerState.stock.name,
         selectedStock: moreStockObj
-      })
+      }, () => this.getStockInfo())
 
     }
 
@@ -107,15 +109,21 @@ class Search extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
+    this.getStockInfo()
+  }
 
-    const { ticker, name } = this.state
+  getStockInfo = () => {
+    const {
+      ticker,
+      name
+    } = this.state
 
     const uri = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${ticker}&apikey=${stockAPI}`
 
     axios.get(uri)
       .then(res => {
 
-        if (res.data['Error Message']){
+        if (res.data['Error Message']) {
           this.setState({
             error: 'oops we are not able to fetch this stock!'
           })
@@ -145,14 +153,14 @@ class Search extends React.Component {
           error: ''
         }, () => this.getAdditionalInfo())
       })
-
   }
 
+
   render() {
-    const { ticker, suggestions, selectedStock, name, error } = this.state
+    const { ticker, suggestions, selectedStock, name, error, buyMore } = this.state
 
     return (
-      <div className='stock-info'>
+      <div className={`stock-info`}>
         <div className='search'>
           Stock Information
           <Form onSubmit={this.handleSubmit} inline>

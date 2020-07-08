@@ -6,6 +6,7 @@ import { withRouter } from 'react-router-dom'
 import CURRENT_USER from '../queries/currentUser'
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import LOGOUT from '../mutations/logoutUser.js'
+import * as helpers from './utils'
 
 import DropDownOptions from './DropDownOptions'
 import './Header.css'
@@ -39,7 +40,7 @@ const Header = (props) => {
     if (data) {
       if (data.currentUser) {
         return (
-          <span className='funds-info'>Availabe to Trade: ${data.currentUser.avalBalance}</span>
+          <span className='funds-info'>Availabe to Trade: ${helpers.numberFormatter(data.currentUser.avalBalance)}</span>
         )
       }
     }
