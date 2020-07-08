@@ -23,6 +23,28 @@ class Search extends React.Component {
 
   }
 
+  componentDidMount() {
+
+    const routerState = this.props.location.state
+
+    if (routerState) {
+
+      let moreStockObj = {
+        name: routerState.stock.name,
+        price: routerState.stock.price,
+        symbol: routerState.stock.ticker
+      }
+
+      this.setState({
+        ticker: routerState.stock.ticker,
+        name: routerState.stock.name,
+        selectedStock: moreStockObj
+      })
+
+    }
+
+  }
+
 
   searchSuggestion = (value) => {
     const { ticker } = this.state
@@ -161,7 +183,8 @@ class Search extends React.Component {
           <StockInfo
             name={name}
             stock={selectedStock}
-          /> : null
+          />
+          : null
         }
       </div>
 

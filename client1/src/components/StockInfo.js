@@ -15,6 +15,8 @@ class StockInfo extends React.Component {
 
   priceFormater = (price, change) => {
 
+    if (!change) change = 0
+
     const formatedPrice = helpers.numberFormatter(price)
 
     let changeToNum = parseFloat(change).toFixed(2)
@@ -34,8 +36,11 @@ class StockInfo extends React.Component {
 
 
   render() {
+
     const { change, latest, price, symbol } = this.props.stock
     const { name } = this.props
+
+    console.log(change)
 
     return (
       <div>
@@ -55,10 +60,14 @@ class StockInfo extends React.Component {
         <Card.Body>
           <Card.Title>Stock Information</Card.Title>
 
+          {
+            change ?
             <StockStats
               formatNumber={helpers.numberFormatter}
               {...this.props.stock}
-            />
+            /> : <div style={{marginTop: '20px'}}></div>
+          }
+
             <QuoteOrBuy
               price={Number(price)}
               name={name}

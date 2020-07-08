@@ -62,10 +62,6 @@ const AssetTable = ({stocks, user}) => {
           <td></td>
         </tr>
       </tbody>
-
-
-
-
     </Table>
   )
 }

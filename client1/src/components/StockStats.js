@@ -1,5 +1,5 @@
 import React from 'react'
-import { Table } from 'react-bootstrap'
+import { Table, Card } from 'react-bootstrap'
 import './StockStats.css'
 
 

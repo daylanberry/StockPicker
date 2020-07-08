@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import * as helpers from './utils'
+import { withRouter } from 'react-router-dom'
 import './StockSummaryEntry.css'
+import { Dropdown } from 'react-bootstrap'
 
-const StockSummaryEntry = ({stock: {name, currentPrice, ticker, costPerShare, qty, totalCost}}) => {
+const StockSummaryEntry = ({history, stock: {name, currentPrice, ticker, costPerShare, qty, totalCost}}) => {
 
   const calcGainLoss = () => {
     let gain = currentPrice * qty - totalCost
@@ -12,6 +14,23 @@ const StockSummaryEntry = ({stock: {name, currentPrice, ticker, costPerShare, qt
       ) : (
       <span style={{color: 'red'}}>${helpers.numberFormatter(gain)}&#8595;</span>
     )
+  }
+
+  const quoteOrBuyScreen = (input) => {
+
+    if (input === 'buy') {
+
+      history.push({
+        pathname: `/search`,
+        state: {
+          stock: {
+            name,
+            price: currentPrice,
+            ticker
+          }
+        }
+      })
+    }
   }
 
   return (
@@ -33,10 +52,21 @@ const StockSummaryEntry = ({stock: {name, currentPrice, ticker, costPerShare, qt
       <td>{qty}</td>
       <td>{calcGainLoss()}</td>
       <td>${helpers.numberFormatter(currentPrice * qty)}</td>
-      <td><button>Transact</button></td>
+      <td>
+        <Dropdown >
+          <Dropdown.Toggle variant="info">
+            Transact
+          </Dropdown.Toggle>
+
+          <Dropdown.Menu>
+            <Dropdown.Item onClick={() => quoteOrBuyScreen('buy')}>Buy</Dropdown.Item>
+            <Dropdown.Item href="#/action-2">Sell</Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
+      </td>
     </tr>
 
   )
 }
 
-export default StockSummaryEntry
+export default withRouter(StockSummaryEntry)
