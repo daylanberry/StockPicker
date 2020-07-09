@@ -84,6 +84,18 @@ const Mutations = new GraphQLObjectType({
       resolve(parent, args, req) {
         return User.updateBalance(req.user._id)
       }
+    },
+
+    sellStock: {
+      type: stockType,
+      args: {
+        ticker: { type: GraphQLString },
+        qty: { type: GraphQLInt }
+      },
+      resolve(parent, { ticker, qty }, req){
+        return Stock.sellStock(ticker, qty, req.user._id)
+          .catch(err => err)
+      }
     }
   }
 })

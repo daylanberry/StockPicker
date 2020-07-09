@@ -40,6 +40,27 @@ StockSchema.statics.updateOrInsertStock = async (stockObj) => {
 
 }
 
+StockSchema.statics.sellStock = async (ticker, qty, userId) => {
+  let stock = await Stock.findOne({ticker, user: userId})
+
+  if (!stock) {
+    throw new Error("You don't own this stock")
+  }
+
+  let updatedQty = stock.qty - qty
+
+  if (updatedQty <= 0) {
+    return Stock.deleteOne({ticker, user: userId})
+  }
+
+  stock.qty = updatedQty
+  stock.totalCost = updatedQty * stock.costPerShare
+  stock.costPerShare = +((stock.totalCost/updatedQty).toFixed(2))
+
+  return stock.save()
+
+}
+
 const Stock = mongoose.model('Stock', StockSchema)
 
 module.exports = Stock
