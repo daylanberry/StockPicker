@@ -6,7 +6,7 @@ import './TransactionSummary.css'
 import Loading from './Loading'
 import * as helpers from './utils'
 
-const TransactionSummary = ({quote, qty, confirm, handleSubmit, cancelOrder, formatNumber, loadingSubmit, user, buy}) => {
+const TransactionSummary = ({quote, qty, confirm, handleSubmit, cancelOrder, formatNumber, loadingSubmit, user, buy, stockData}) => {
 
   const [ showHoverMsg, toggleShowHoverMsg ] = useState(false)
   const [error, setError] = useState('')
@@ -15,9 +15,22 @@ const TransactionSummary = ({quote, qty, confirm, handleSubmit, cancelOrder, for
     if (user) {
       if (user.avalBalance < quote && buy && !loadingSubmit) {
         setError('You need more funds')
+      } else {
+        setError('')
       }
     }
-  }, [user])
+  }, [user, buy])
+
+  useEffect(() => {
+    if (stockData && !buy) {
+      let holdingQty = stockData.findStock ? stockData.findStock.qty : 0
+      if (holdingQty < qty && !loadingSubmit) {
+        setError("You don't own this many shares")
+      } else {
+        setError('')
+      }
+    }
+  }, [stockData, qty, buy])
 
   const continueOrSubmit = () => {
     let isDisabled = user ? false : true
@@ -87,7 +100,7 @@ const TransactionSummary = ({quote, qty, confirm, handleSubmit, cancelOrder, for
           Cancel
         </Button>
         {
-          error.length ? <ErrorMessage error='you need more funds!' /> : continueOrSubmit()
+          error.length ? <ErrorMessage error={error} /> : continueOrSubmit()
         }
 
         {

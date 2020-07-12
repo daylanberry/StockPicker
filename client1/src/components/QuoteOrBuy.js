@@ -10,8 +10,13 @@ import ADD_UPDATE_STOCK from '../mutations/addUpdateStock'
 import SET_AVAILABLE_BALANCE from '../mutations/setAvailableBal'
 import SELL_STOCK from '../mutations/sellStock'
 import CURRENT_USER from '../queries/currentUser'
+import GET_USER_STOCKS from '../queries/getUserStocks'
+import FIND_STOCK from '../queries/findStock'
+
+import { useApolloClient } from "@apollo/react-hooks";
 
 const QuoteOrBuy = ({ price, name, ticker, buy, toggle }) => {
+  const client = useApolloClient()
 
   const [confirm, toggleConfirm] = useState(false)
   const [successModal, setSuccessModal] = useState(false)
@@ -20,8 +25,27 @@ const QuoteOrBuy = ({ price, name, ticker, buy, toggle }) => {
   const [loadingSubmit, setLoadingSubmit] = useState(false)
   const [user, setUser] = useState({})
 
-  const [addUpdateStock] = useMutation(ADD_UPDATE_STOCK)
-  const [sellStock] = useMutation(SELL_STOCK)
+  const { data: stockData, loading: stockLoading, error: stockError } = useQuery(FIND_STOCK, {
+    variables: { ticker }
+  })
+
+  const [addUpdateStock] = useMutation(ADD_UPDATE_STOCK, {
+    refetchQueries: [{
+      query: GET_USER_STOCKS
+    }, {
+      query: FIND_STOCK,
+      variables: { ticker }
+    }]
+  })
+
+  const [sellStock] = useMutation(SELL_STOCK, {
+    refetchQueries: [{
+      query: GET_USER_STOCKS
+    }, {
+      query: FIND_STOCK,
+      variables: { ticker }
+    }]
+  })
   const [setAvailableBal] = useMutation(SET_AVAILABLE_BALANCE)
   const {loading, error, data} = useQuery(CURRENT_USER)
 
@@ -56,6 +80,7 @@ const QuoteOrBuy = ({ price, name, ticker, buy, toggle }) => {
     let currentPrice = Number(price.toFixed(2))
     let addOrSubtractFromAvailable = buy ? -(currentPrice * qty) : currentPrice * qty
 
+
     if (!confirm) {
       toggleConfirm(true)
 
@@ -81,7 +106,8 @@ const QuoteOrBuy = ({ price, name, ticker, buy, toggle }) => {
 
       setLoadingSubmit(true)
       setAvailableBal({
-        variables: { balance: addOrSubtractFromAvailable }})
+        variables: { balance: addOrSubtractFromAvailable }
+      })
     }
 
   }
@@ -101,6 +127,8 @@ const QuoteOrBuy = ({ price, name, ticker, buy, toggle }) => {
           <SubmittedModal
             show={successModal}
             close={setSuccessModal}
+            buy={buy}
+            qty={qty}
           />
           : null
         }
@@ -132,8 +160,8 @@ const QuoteOrBuy = ({ price, name, ticker, buy, toggle }) => {
           cancelOrder={newOrder}
           loadingSubmit={loadingSubmit}
           buy={buy}
-          loadingSubmit={loadingSubmit}
           user={data ? data.currentUser : null}
+          stockData={stockData}
         /> :
         null
 

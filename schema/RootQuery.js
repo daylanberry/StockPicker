@@ -33,6 +33,16 @@ const RootQuery = new GraphQLObjectType({
         return Stock.find({user: req.user._id})
           .then(stock => stock)
       }
+    },
+
+    findStock: {
+      type: stockType,
+      args: {
+        ticker: { type: GraphQLString }
+      },
+      resolve(parent, { ticker }, req){
+        return Stock.findOne({ticker, user: req.user._id})
+      }
     }
   }
 })
