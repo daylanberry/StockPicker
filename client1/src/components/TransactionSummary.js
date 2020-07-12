@@ -13,7 +13,7 @@ const TransactionSummary = ({quote, qty, confirm, handleSubmit, cancelOrder, for
 
   useEffect(() => {
     if (user) {
-      if (user.avalBalance < quote && buy) {
+      if (user.avalBalance < quote && buy && !loadingSubmit) {
         setError('You need more funds')
       }
     }

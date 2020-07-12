@@ -68,16 +68,11 @@ class StockInfo extends React.Component {
             </Dropdown.Menu>
           </Dropdown>
 
-
           </Card.Title>
-
-          {
-            change ?
             <StockStats
               formatNumber={helpers.numberFormatter}
               {...this.props.stock}
-            /> : <div style={{marginTop: '20px'}}></div>
-          }
+            />
 
             <QuoteOrBuy
               price={Number(price)}

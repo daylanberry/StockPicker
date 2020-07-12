@@ -52,7 +52,7 @@ const StockSummaryEntry = ({history, stock: {name, currentPrice, ticker, costPer
       <td>${helpers.numberFormatter(currentPrice * qty)}</td>
       <td>
         <Dropdown >
-          <Dropdown.Toggle variant="info">
+          <Dropdown.Toggle variant='secondary'>
             Transact
           </Dropdown.Toggle>
 

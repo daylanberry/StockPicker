@@ -198,7 +198,7 @@ class Search extends React.Component {
           }
         </div>
         {
-          selectedStock.symbol === ticker ?
+          selectedStock.symbol === ticker && selectedStock.change ?
           <StockInfo
             name={name}
             buy={buy}

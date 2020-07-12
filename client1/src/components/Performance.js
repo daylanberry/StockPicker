@@ -6,6 +6,7 @@ import ADD_UPDATE_STOCK from '../mutations/addUpdateStock'
 import UPDATE_USER_ASSETS from '../mutations/updateUserAssets'
 import axios from 'axios'
 
+import { Spinner } from 'react-bootstrap'
 import * as helpers from './utils'
 
 import AssetTable from './AssetTable'
@@ -82,6 +83,15 @@ const Performance = props =>  {
     }
   }
 
+  const tableLoading = () => {
+    return (
+      <div>
+        <Spinner animation="grow" variant="primary" />
+        <Spinner animation="grow" variant="secondary" />
+        <Spinner animation="grow" variant="success" />
+      </div>
+    )
+  }
 
 
   return (
@@ -89,10 +99,14 @@ const Performance = props =>  {
       <h3>Balances and Holdings</h3>
       <div>
         <span>Total Assets: {displayAssets()} </span>
-        <AssetTable
-          stocks={stocks}
-          user={data1}
-        />
+        {
+          stocks.length ? (
+            <AssetTable
+              stocks={stocks}
+              user={data1}
+            />
+          ) : tableLoading()
+        }
       </div>
     </div>
   )

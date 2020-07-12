@@ -21,6 +21,7 @@ const QuoteOrBuy = ({ price, name, ticker, buy, toggle }) => {
   const [user, setUser] = useState({})
 
   const [addUpdateStock] = useMutation(ADD_UPDATE_STOCK)
+  const [sellStock] = useMutation(SELL_STOCK)
   const [setAvailableBal] = useMutation(SET_AVAILABLE_BALANCE)
   const {loading, error, data} = useQuery(CURRENT_USER)
 
@@ -70,11 +71,17 @@ const QuoteOrBuy = ({ price, name, ticker, buy, toggle }) => {
       if (buy) {
         addUpdateStock({variables: stockObj})
       } else {
-
+        sellStock({
+          variables: {
+            ticker,
+            qty
+          }
+        })
       }
 
-      setAvailableBal({variables: {balance: addOrSubtractFromAvailable}})
       setLoadingSubmit(true)
+      setAvailableBal({
+        variables: { balance: addOrSubtractFromAvailable }})
     }
 
   }
@@ -125,6 +132,7 @@ const QuoteOrBuy = ({ price, name, ticker, buy, toggle }) => {
           cancelOrder={newOrder}
           loadingSubmit={loadingSubmit}
           buy={buy}
+          loadingSubmit={loadingSubmit}
           user={data ? data.currentUser : null}
         /> :
         null
