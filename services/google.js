@@ -7,12 +7,11 @@ const User = mongoose.model('User')
 passport.use(new GoogleStrategy({
     clientID: keys.googleClientID,
     clientSecret: keys.googleSecretKey,
-    callbackURL: "http://stock-simu.herokuapp.com/auth/google/callback",
+    callbackURL: "/auth/google/callback",
     proxy: true
   },
 
   (accessToken, refreshToken, profile, done) => {
-    console.log('hiii')
 
     User.findOne({googleId: profile.id})
       .then(user => {
