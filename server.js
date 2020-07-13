@@ -10,6 +10,9 @@ const flash = require('connect-flash')
 const schema = require('./schema/schema.js')
 const session = require('express-session');
 
+const compression = require('compression')
+const enforce = require('express-sslify')
+
 mongoose.connect(`mongodb+srv://daylan:${keys.mongoURI}@cluster0-pqujg.mongodb.net/test?retryWrites=true&w=majority`, {useNewUrlParser: true})
 require('./models/Stock.js')
 require('./models/User.js')
@@ -19,6 +22,10 @@ require('./services/google.js')
 const app = express()
 
 if (process.env.NODE_ENV === 'production') {
+  app.use(compression())
+  app.use(enforce.HTTPS({
+    trustProtoHeader: true
+  }))
 
   app.use(express.static(path.join(__dirname, 'client1/build')));
 
