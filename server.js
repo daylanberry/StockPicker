@@ -9,6 +9,7 @@ const cors = require('cors')
 const flash = require('connect-flash')
 const schema = require('./schema/schema.js')
 const session = require('express-session');
+const path = require('path')
 
 const compression = require('compression')
 const enforce = require('express-sslify')
