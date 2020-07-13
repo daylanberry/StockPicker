@@ -1,6 +1,6 @@
 import React from 'react'
 import './Search.css'
-import { stockAPI, suggestionStock, finnhub } from '../keys/keys'
+import { stockAPI, suggestionStock, finnhub } from '../api/keys'
 import axios from 'axios'
 
 import Suggestions from './Suggestions'
