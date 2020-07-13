@@ -6,7 +6,7 @@ import { Button } from 'react-bootstrap'
 import SubmittedModal from './SubmittedModal'
 
 import { useMutation, useQuery } from '@apollo/react-hooks';
-import ADD_UPDATE_STOCK from '../mutations/addUpdateStock'
+import ADD_UPDATE_STOCK from '../mutations/addOrUpdateStock'
 import SET_AVAILABLE_BALANCE from '../mutations/setAvailableBal'
 import SELL_STOCK from '../mutations/sellStock'
 import CURRENT_USER from '../queries/currentUser'
