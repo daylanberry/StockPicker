@@ -19,7 +19,7 @@ export const cache = new InMemoryCache({
 
 
 export const client = new ApolloClient({
-  uri: 'https://stock-simu.herokuapp.com/graphql',
+  uri: '/graphql',
   credentials: 'include',
   cache
 })
