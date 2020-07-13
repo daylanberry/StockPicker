@@ -4,7 +4,7 @@ module.exports = function(app) {
   app.use(
     '/api/**',
     createProxyMiddleware({
-      target: 'http://localhost:5010',
+      target: 'https://stock-simu.herokuapp.com/',
       changeOrigin: true
     })
   )
@@ -12,7 +12,7 @@ module.exports = function(app) {
   app.use(
     '/auth/google',
     createProxyMiddleware({
-      target: 'http://localhost:5010'
+      target: 'https://stock-simu.herokuapp.com/'
     })
   )
 };
