@@ -50,7 +50,7 @@ app.use(
 app.use(session({
   saveUninitialized: true,
   resave: true,
-  secret: 'verysecretsecret'
+  secret: 'secret'
 }));
 
 app.use(passport.initialize())
