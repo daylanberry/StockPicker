@@ -27,10 +27,10 @@ if (process.env.NODE_ENV === 'production') {
     trustProtoHeader: true
   }))
 
-  app.use(express.static(path.join(__dirname, 'client1/build')));
+  app.use(express.static(path.join(__dirname, 'client/build')));
 
   app.get('*', function (req, res) {
-    res.sendFile(path.join(__dirname, 'client1/build', 'index.html'))
+    res.sendFile(path.join(__dirname, 'client/build', 'index.html'))
   })
 }
 
