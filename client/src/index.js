@@ -19,7 +19,6 @@ export const cache = new InMemoryCache({
 
 let uri = process.env.NODE_ENV === 'production' ? '/graphql' : 'http://localhost:5010/graphql'
 
-console.log(uri)
 
 export const client = new ApolloClient({
   uri,
