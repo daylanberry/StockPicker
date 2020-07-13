@@ -112,7 +112,7 @@ const LoginOrSignUp = (props) => {
           <Button className='red' variant="primary" type="submit">
             Login with email
           </Button>
-          <a href='auth/google' className='google'>Sign In with Google</a>
+          <a href='/auth/google' className='google'>Sign In with Google</a>
         </div>
         {errorMessage()}
       </Form>
