@@ -37,9 +37,11 @@ if (process.env.NODE_ENV === 'production') {
 
 let origin = process.env.NODE_ENV === 'production' ? 'https://stock-simu.herokuapp.com/' : 'http://localhost:3000'
 
-
 app.use(bodyParser.json())
-app.use('*', cors({ origin , credentials: true }));
+app.use('*', cors({
+  origin: 'https://stock-simu.herokuapp.com/',
+  credentials: true
+}));
 
 
 app.use(
