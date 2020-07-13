@@ -6,7 +6,7 @@ import ADD_UPDATE_STOCK from '../mutations/addUpdateStock'
 import UPDATE_USER_ASSETS from '../mutations/updateUserAssets'
 import axios from 'axios'
 
-import { Spinner } from 'react-bootstrap'
+import { Spinner, Card, Button } from 'react-bootstrap'
 import * as helpers from './utils'
 
 import AssetTable from './AssetTable'
@@ -93,20 +93,53 @@ const Performance = props =>  {
     )
   }
 
+  const displayContent = () => {
+    if (!stocks.length && data1) {
+      if (data1.currentUser.assets === data1.currentUser.avalBalance) {
+
+        return (
+          <div style={{display: 'flex', justifyContent: 'center'}}>
+            <Card style={{marginTop: '20px', width: '40%'}}>
+              <Card.Body >
+                <Card.Title>No Stocks held</Card.Title>
+                <Card.Text>
+                  Click below to search and buy funds!
+                </Card.Text>
+                <Button onClick={() => props.history.push('/search')} variant="primary">Search/Buy Funds</Button>
+              </Card.Body>
+            </Card>
+
+          </div>
+        )
+      }
+    }
+
+    return (
+      stocks.length ? (
+        <AssetTable
+          stocks={stocks}
+          user={data1}
+        />
+      ) : tableLoading()
+    )
+
+  }
+
 
   return (
     <div>
       <h3>Balances and Holdings</h3>
       <div>
         <span>Total Assets: {displayAssets()} </span>
-        {
+        {/* {
           stocks.length ? (
             <AssetTable
               stocks={stocks}
               user={data1}
             />
           ) : tableLoading()
-        }
+        } */}
+        {displayContent()}
       </div>
     </div>
   )

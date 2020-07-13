@@ -72,8 +72,8 @@ const QuoteOrBuy = ({ price, name, ticker, buy, toggle }) => {
 
   const handleChange = (e) => {
     let newQty = Number(e.target.value)
-    setQty(newQty)
     setQuotedAmount(0)
+    setQty(newQty)
   }
 
   const handleSubmit = () => {
