@@ -18,7 +18,7 @@ passport.deserializeUser((userObj, cb) => {
 passport.use(new GoogleStrategy({
     clientID: keys.googleClientID,
     clientSecret: keys.googleSecretKey,
-    callbackURL: "/auth/google/callback",
+    callbackURL: "https://stock-simu.herokuapp.com/auth/google/callback",
     proxy: true
   },
 
