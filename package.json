@@ -8,7 +8,7 @@
     "server": "nodemon server.js",
     "client": "npm run start --prefix client1",
     "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
-    "heroku-postbuild": "cd client1 && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client1 && npm run build --prefix client1"
   },
   "keywords": [],
   "author": "",
