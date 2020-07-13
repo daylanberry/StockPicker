@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import GET_USER_STOCKS from '../queries/getUserStocks'
 import CURRENT_USER from '../queries/currentUser'
-import ADD_UPDATE_STOCK from '../mutations/addUpdateStock'
+import ADD_UPDATE_STOCK from '../mutations/addOrUpdateStock'
 import UPDATE_USER_ASSETS from '../mutations/updateUserAssets'
 import axios from 'axios'
 
