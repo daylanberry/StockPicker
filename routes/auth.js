@@ -3,13 +3,13 @@ const passport = require('passport')
 
 module.exports = (app) => {
 
-  app.get('/auth/google',
+  app.get('http://stock-simu.herokuapp.com/auth/google',
     passport.authenticate('google', {
       scope: ['openid', 'profile', 'email']
     })
   )
 
-  app.get('/auth/google/callback',
+  app.get('http://stock-simu.herokuapp.com/auth/google/callback',
     passport.authenticate('google', {
       failureRedirect: 'auth/google/failure',
       successRedirect: '/'
