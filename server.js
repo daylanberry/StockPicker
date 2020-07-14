@@ -53,11 +53,11 @@ app.use(
 )
 
 
-app.use(session({
-  saveUninitialized: true,
-  resave: true,
-  secret: 'secret'
-}));
+// app.use(session({
+//   saveUninitialized: true,
+//   resave: true,
+//   secret: 'secret'
+// }));
 
 app.use(passport.initialize())
 app.use(passport.session())
