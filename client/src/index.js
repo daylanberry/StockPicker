@@ -17,7 +17,7 @@ export const cache = new InMemoryCache({
   dataIdFromObject: o => o.id
 })
 
-let uri = process.env.NODE_ENV === 'production' ? 'https://stock-simu.herokuapp.com/graphql' : 'http://localhost:5010/graphql'
+let uri = process.env.NODE_ENV === 'production' ? '/graphql' : 'http://localhost:5010/graphql'
 
 
 export const client = new ApolloClient({

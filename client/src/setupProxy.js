@@ -16,10 +16,4 @@ module.exports = function(app) {
     })
   )
 
-  app.use(
-    '/auth/google',
-    createProxyMiddleware({
-      target: 'https://stock-simu.herokuapp.com'
-    })
-  )
 };
