@@ -64,6 +64,12 @@ app.use(passport.session())
 require('./routes/auth.js')(app)
 require('./routes/user.js')(app)
 
+function isAuthenticated(req, res, next) {
+  return req.isAuthenticated() ?
+    next() :
+    res.redirect('/auth/google');
+}
+
 
 app.use('/graphql', expressGraphQL({
   graphiql: true,

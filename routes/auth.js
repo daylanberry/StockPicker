@@ -12,8 +12,7 @@ module.exports = (app) => {
   app.get('/auth/google/callback',
     passport.authenticate('google', {
       failureRedirect: 'auth/google/failure',
-      successRedirect: '/',
-      session: true
+      successRedirect: '/graphql'
     }),
     (req, res) => {
       res.json(req.user)
