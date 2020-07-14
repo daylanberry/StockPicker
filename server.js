@@ -68,7 +68,7 @@ require('./routes/user.js')(app)
 
 app.use('/graphql', expressGraphQL({
   graphiql: true,
-  rootValue: { session: request.session },
+  context: ({ req, res }) => buildContext({ req, res, User }),
   schema
 }))
 
