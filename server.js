@@ -19,8 +19,6 @@ require('./models/Stock.js')
 require('./models/User.js')
 require('./services/localSignup.js')
 require('./services/google.js')
-require('./routes/auth.js')(app)
-
 
 const app = express()
 
@@ -63,7 +61,7 @@ app.use(session({
 
 app.use(passport.initialize())
 app.use(passport.session())
-// require('./routes/auth.js')(app)
+require('./routes/auth.js')(app)
 require('./routes/user.js')(app)
 
 
