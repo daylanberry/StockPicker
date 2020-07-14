@@ -15,4 +15,11 @@ module.exports = function(app) {
       target: 'http://localhost:5010'
     })
   )
+
+  app.use(
+    '/auth/google',
+    createProxyMiddleware({
+      target: 'https://stock-simu.herokuapp.com'
+    })
+  )
 };
