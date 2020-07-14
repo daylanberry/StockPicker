@@ -64,30 +64,32 @@ app.use(passport.session())
 require('./routes/auth.js')(app)
 require('./routes/user.js')(app)
 
-app.use('/graphql', expressGraphQL({
-  graphiql: true,
-  schema
-}))
 
-
-// function isAuthenticated(req, res, next) {
-//   return req.isAuthenticated() ?
-//     next() :
-//     res.redirect('/auth/google');
-// }
+// app.use('/graphql', expressGraphQL({
+//   graphiql: true,
+//   schema
+// }))
 
 
 
-// const graphqlHTTP = require('express-graphql');
+function isAuthenticated(req, res, next) {
+  return req.isAuthenticated() ?
+    next() :
+    res.redirect('/auth/google');
+}
 
-// app.use(
-//   '/graphql',
-//   graphqlHTTP(req => ({
-//     schema,
-//     graphiql: true,
-//     context: req
-//   }))
-// );
+
+
+const graphqlHTTP = require('express-graphql');
+
+app.use(
+  '/graphql',
+  graphqlHTTP(req => ({
+    schema,
+    graphiql: true,
+    context: req
+  }))
+);
 
 const PORT = process.env.PORT || 5010
 app.listen(PORT, () => console.log('Your live on port ' + PORT))
