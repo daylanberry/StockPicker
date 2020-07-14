@@ -23,10 +23,10 @@ require('./services/google.js')
 const app = express()
 
 if (process.env.NODE_ENV === 'production') {
-  // app.use(compression())
-  // app.use(enforce.HTTPS({
-  //   trustProtoHeader: true
-  // }))
+  app.use(compression())
+  app.use(enforce.HTTPS({
+    trustProtoHeader: true
+  }))
 
   app.use(express.static(path.join(__dirname, 'client/build')));
 
@@ -36,7 +36,6 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 let origin = process.env.NODE_ENV === 'production' ? 'https://stock-simu.herokuapp.com' : 'http://localhost:3000'
-console.log(origin)
 
 app.use(bodyParser.json())
 app.use('*', cors({
