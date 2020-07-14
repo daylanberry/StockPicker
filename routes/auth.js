@@ -13,10 +13,7 @@ module.exports = (app) => {
     passport.authenticate('google', {
       failureRedirect: 'auth/google/failure',
       successRedirect: '/'
-    }),
-    (req, res) => {
-      res.json(req.user)
-    }
+    })
   )
 
   app.post('/api/signup', passport.authenticate('local-signup', {

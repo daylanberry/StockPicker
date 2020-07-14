@@ -24,10 +24,10 @@ const app = express()
 
 
 if (process.env.NODE_ENV === 'production') {
-  app.use(compression())
-  app.use(enforce.HTTPS({
-    trustProtoHeader: true
-  }))
+  // app.use(compression())
+  // app.use(enforce.HTTPS({
+  //   trustProtoHeader: true
+  // }))
 
   app.use(express.static(path.join(__dirname, 'client/build')));
 
@@ -56,7 +56,6 @@ app.use(
 app.use(session({
   saveUninitialized: false,
   resave: false,
-  genid: (req) => uuid(),
   secret: 'secret'
 }));
 
@@ -65,6 +64,12 @@ app.use(passport.session())
 require('./routes/auth.js')(app)
 require('./routes/user.js')(app)
 
+app.use('/graphql', expressGraphQL({
+  graphiql: true,
+  schema
+}))
+
+
 // function isAuthenticated(req, res, next) {
 //   return req.isAuthenticated() ?
 //     next() :
@@ -72,10 +77,6 @@ require('./routes/user.js')(app)
 // }
 
 
-app.use('/graphql', expressGraphQL({
-  graphiql: true,
-  schema
-}))
 
 // const graphqlHTTP = require('express-graphql');
 
