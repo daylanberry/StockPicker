@@ -54,8 +54,8 @@ app.use(
 
 
 app.use(session({
-  saveUninitialized: true,
-  resave: true,
+  saveUninitialized: false,
+  resave: false,
   secret: 'secret'
 }));
 
