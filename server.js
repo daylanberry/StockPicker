@@ -71,10 +71,22 @@ function isAuthenticated(req, res, next) {
 }
 
 
-app.use('/graphql', expressGraphQL({
-  graphiql: true,
-  schema
-}))
+// app.use('/graphql', expressGraphQL({
+//   graphiql: true,
+//   schema
+// }))
+
+const graphqlHTTP = require('express-graphql');
+
+app.use(
+  '/graphql',
+  isAuthenticated,
+  graphqlHTTP(req => ({
+    schema,
+    graphiql: true,
+    context: req
+  }))
+);
 
 const PORT = process.env.PORT || 5010
 app.listen(PORT, () => console.log('Your live on port ' + PORT))
