@@ -10,6 +10,7 @@ const flash = require('connect-flash')
 const schema = require('./schema/schema.js')
 const session = require('express-session');
 const path = require('path')
+const request = require('request')
 
 const compression = require('compression')
 const enforce = require('express-sslify')
@@ -54,8 +55,8 @@ app.use(
 
 
 app.use(session({
-  saveUninitialized: false,
-  resave: false,
+  saveUninitialized: true,
+  resave: true,
   secret: 'secret'
 }));
 
@@ -67,6 +68,7 @@ require('./routes/user.js')(app)
 
 app.use('/graphql', expressGraphQL({
   graphiql: true,
+  rootValue: { session: request.session },
   schema
 }))
 
