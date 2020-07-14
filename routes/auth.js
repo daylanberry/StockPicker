@@ -14,7 +14,10 @@ module.exports = (app) => {
       failureRedirect: 'auth/google/failure',
       successRedirect: '/',
       session: true
-    })
+    }),
+    (req, res) => {
+      res.json(req.user)
+    }
   )
 
   app.post('/api/signup', passport.authenticate('local-signup', {
