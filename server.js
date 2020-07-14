@@ -10,7 +10,6 @@ const flash = require('connect-flash')
 const schema = require('./schema/schema.js')
 const session = require('express-session');
 const path = require('path')
-const request = require('request')
 
 const compression = require('compression')
 const enforce = require('express-sslify')
@@ -68,7 +67,6 @@ require('./routes/user.js')(app)
 
 app.use('/graphql', expressGraphQL({
   graphiql: true,
-  context: ({ req, res }) => buildContext({ req, res, User }),
   schema
 }))
 
