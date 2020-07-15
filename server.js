@@ -57,9 +57,7 @@ app.use(session({
   saveUninitialized: true,
   resave: true,
   secret: 'secret',
-  cookie: {
-    secure: true
-  }
+  proxy: true
 }));
 
 app.use(passport.initialize())
