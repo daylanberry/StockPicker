@@ -20,6 +20,7 @@ passport.use(new GoogleStrategy({
     clientID: keys.googleClientID,
     clientSecret: keys.googleSecretKey,
     callbackURL: "/auth/google/callback",
+    passReqToCallback: true,
     proxy: true
   },
 
