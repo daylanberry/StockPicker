@@ -34,6 +34,8 @@ const Performance = props =>  {
   //updates database
   useEffect(() => {
 
+    let isCancelled = false;
+
     stocks.forEach(({ name, ticker, currentPrice})=> {
       let stockObj = {
         name,
@@ -69,14 +71,13 @@ const Performance = props =>  {
       Promise.all(updatedStocks)
         .then(stockData => setStocks(stockData))
     }
+
   }
 
   const displayAssets = () => {
 
-    if (data1) {
-      if (data1.currentUser) {
-        return <span>${helpers.numberFormatter(data1.currentUser.assets)}</span>
-      }
+    if (data1 && data1.currentUser) {
+      return <span>${helpers.numberFormatter(data1.currentUser.assets)}</span>
     } else {
       return <span>Loading...</span>
     }
@@ -130,14 +131,6 @@ const Performance = props =>  {
       <h3>Balances and Holdings</h3>
       <div>
         <span>Total Assets: {displayAssets()} </span>
-        {/* {
-          stocks.length ? (
-            <AssetTable
-              stocks={stocks}
-              user={data1}
-            />
-          ) : tableLoading()
-        } */}
         {displayContent()}
       </div>
     </div>

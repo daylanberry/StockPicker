@@ -51,7 +51,7 @@ const Header = (props) => {
     <Navbar bg="dark" variant="dark">
       <Nav className="mr-auto justify-content">
         <Link className='home' to='/'>Home</Link>
-        <DropDownOptions />
+        <DropDownOptions/>
 
         {
           renderBalance()
