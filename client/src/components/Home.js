@@ -1,7 +1,4 @@
 import React from 'react'
-// import CURRENT_USER from '../queries/currentUser'
-// import { useQuery } from '@apollo/react-hooks'
-
 
 const Home = props => {
 

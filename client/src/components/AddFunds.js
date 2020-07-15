@@ -51,6 +51,7 @@ const SetAmount = (props) => {
   }
 
   return (
+    <div className='amt-container'>
     <div className='set-amount'>
       <h4>Enter Amount</h4>
       <div className='bal-input-container'>
@@ -74,7 +75,7 @@ const SetAmount = (props) => {
           Trade!
         </Button>
       </div>
-      <div >
+
         {
           error.length ? (
             <div className='amount-error'>
@@ -84,9 +85,11 @@ const SetAmount = (props) => {
           )
           : null
         }
-      </div>
 
     </div>
+
+    </div>
+
   )
 }
 

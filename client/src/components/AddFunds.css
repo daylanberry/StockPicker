@@ -1,3 +1,8 @@
+.amt-container {
+  display: flex;
+  justify-content: center;
+}
+
 .set-amount {
   margin-left: 10px;
   margin-top: 20px;
@@ -19,9 +24,11 @@
 }
 
 .amount-error {
-  width: 40.5%;
+  width: 82%;
   margin-top: 10px;
-  margin-left: 315px
+  margin-left: 83.5px;
+  align-items: center;
+  justify-content: center;
 
 }
 
