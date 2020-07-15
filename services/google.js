@@ -4,6 +4,18 @@ const keys = require('../keys/keys.js')
 const mongoose = require('mongoose')
 const User = mongoose.model('User')
 
+passport.serializeUser((user, cb) => {
+  cb(null, user)
+})
+
+passport.deserializeUser((id, cb) => {
+  User.findById(id)
+    .then(user => {
+      done(null, user)
+    })
+})
+
+
 passport.use(new GoogleStrategy({
     clientID: keys.googleClientID,
     clientSecret: keys.googleSecretKey,
@@ -33,11 +45,11 @@ passport.use(new GoogleStrategy({
   }
 ))
 
-passport.serializeUser((user, cb) => {
+// passport.serializeUser((user, cb) => {
 
-  cb(null, user)
-})
+//   cb(null, user)
+// })
 
-passport.deserializeUser((userObj, cb) => {
-  cb(null, userObj)
-})
+// passport.deserializeUser((userObj, cb) => {
+//   cb(null, userObj)
+// })
