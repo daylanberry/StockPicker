@@ -15,7 +15,6 @@ import AssetTable from './AssetTable'
 const Performance = props =>  {
 
   const [stocks, setStocks] = useState([])
-  const [balance, setBalance] = useState(0)
 
   const [updateStock] = useMutation(ADD_UPDATE_STOCK);
   const [updateUserAssets] = useMutation(UPDATE_USER_ASSETS, {

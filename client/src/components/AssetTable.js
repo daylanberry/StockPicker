@@ -9,7 +9,6 @@ const AssetTable = ({stocks, user}) => {
 
   const totalCalc = () => {
     if (user) {
-      const { currentUser } = user
       let totalBalance = stocks.reduce((acc, curr) => {
         return acc + curr.currentPrice * curr.qty
       }, 0)

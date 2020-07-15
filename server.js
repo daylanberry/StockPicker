@@ -65,6 +65,7 @@ require('./routes/auth.js')(app)
 require('./routes/user.js')(app)
 
 
+
 app.use('/graphql', expressGraphQL({
   graphiql: true,
   schema

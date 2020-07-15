@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import * as helpers from './utils'
 import { withRouter } from 'react-router-dom'
 import './StockSummaryEntry.css'

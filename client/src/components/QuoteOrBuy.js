@@ -13,17 +13,14 @@ import CURRENT_USER from '../queries/currentUser'
 import GET_USER_STOCKS from '../queries/getUserStocks'
 import FIND_STOCK from '../queries/findStock'
 
-import { useApolloClient } from "@apollo/react-hooks";
 
 const QuoteOrBuy = ({ price, name, ticker, buy, toggle }) => {
-  const client = useApolloClient()
 
   const [confirm, toggleConfirm] = useState(false)
   const [successModal, setSuccessModal] = useState(false)
   const [qty, setQty] = useState(0)
   const [quotedAmount, setQuotedAmount] = useState(0)
   const [loadingSubmit, setLoadingSubmit] = useState(false)
-  const [user, setUser] = useState({})
 
   const { data: stockData, loading: stockLoading, error: stockError } = useQuery(FIND_STOCK, {
     variables: { ticker }
@@ -138,7 +135,6 @@ const QuoteOrBuy = ({ price, name, ticker, buy, toggle }) => {
           <input
             className='shares-input'
             type='text'
-            type='number'
             value={qty > 0 ? qty : ''}
             onChange={handleChange}
           />

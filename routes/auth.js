@@ -9,12 +9,19 @@ module.exports = (app) => {
     })
   )
 
+  // app.get('/auth/google/callback',
+  //   passport.authenticate('google', {
+  //     failureRedirect: 'auth/google/failure',
+  //     successRedirect: '/'
+  //   })
+  // )
+
   app.get('/auth/google/callback',
-    passport.authenticate('google', {
-      failureRedirect: 'auth/google/failure',
-      successRedirect: '/'
-    })
-  )
+  passport.authenticate('google', { failureRedirect: '/login' }),
+  function(req, res) {
+    res.redirect('/');
+  });
+
 
   app.post('/api/signup', passport.authenticate('local-signup', {
     successRedirect: '/',

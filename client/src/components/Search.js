@@ -120,8 +120,7 @@ class Search extends React.Component {
 
   getStockInfo = (buyMorePrice=null) => {
     const {
-      ticker,
-      name
+      ticker
     } = this.state
 
     const uri = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${ticker}&apikey=${stockAPI}`

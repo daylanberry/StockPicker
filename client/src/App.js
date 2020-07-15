@@ -8,10 +8,8 @@ import Search from './components/Search'
 import Performance from './components/Performance'
 import AddFunds from './components/AddFunds'
 
-import StockInfo from './components/StockInfo'
 
-
-import { useMutation, useQuery } from '@apollo/react-hooks'
+import { useQuery } from '@apollo/react-hooks'
 import CURRENT_USER from './queries/currentUser'
 
 function App(props) {

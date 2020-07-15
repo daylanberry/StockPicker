@@ -9,7 +9,6 @@ import ApolloClient from 'apollo-boost'
 import { ApolloProvider } from '@apollo/react-hooks'
 import { InMemoryCache } from 'apollo-client-preset'
 
-import CURRENT_USER from './queries/currentUser'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 

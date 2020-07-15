@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Table, Button, Alert } from 'react-bootstrap'
+import { Table, Button } from 'react-bootstrap'
 
 import ErrorMessage from './ErrorMessage'
 import './TransactionSummary.css'
