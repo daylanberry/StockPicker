@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import { Switch, Route } from 'react-router-dom'
 import Header from './components/Header'
-import Home from './components/Home'
+import Home from './components/Homepage/Home'
 import LoginOrSignUp from './components/LoginOrSignUp'
 import Search from './components/Search'
 import Performance from './components/Performance'

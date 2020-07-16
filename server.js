@@ -65,7 +65,10 @@ app.use(passport.session())
 require('./routes/auth.js')(app)
 require('./routes/user.js')(app)
 
-
+app.get('/news', (req, res) => {
+  axios.get("http://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=93533ced5c654f11b8d6737393d2b7a9")
+    .then(result => console.log(result))
+})
 
 app.use('/graphql', expressGraphQL({
   graphiql: true,
