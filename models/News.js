@@ -14,16 +14,18 @@ const NewsSchema = new Schema({
 
 NewsSchema.statics.updateNews = async () => {
 
-  // const newNews = await axios.get(`http://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=${keys.newsApi}`)
+  const newNews = await axios.get(`http://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=${keys.newsApi}`)
 
   return News.deleteMany({})
     .then(() => {
-      dummy.forEach(article => {
-        return News.create(article)
+      let news = newNews ? newNews.data.articles : dummy
+
+      news.forEach(article => {
+        if (article.description && article.description.length) {
+          return News.create(article)
+        }
       })
     })
-
-
 }
 
 const News = mongoose.model('News', NewsSchema)
