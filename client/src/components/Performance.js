@@ -6,10 +6,11 @@ import ADD_UPDATE_STOCK from '../mutations/addOrUpdateStock'
 import UPDATE_USER_ASSETS from '../mutations/updateUserAssets'
 import axios from 'axios'
 
-import { Spinner, Card, Button } from 'react-bootstrap'
+import { Card, Button } from 'react-bootstrap'
 import * as helpers from './utils'
 
 import AssetTable from './AssetTable'
+import PageLoading from './PageLoading'
 
 
 const Performance = props =>  {
@@ -83,15 +84,6 @@ const Performance = props =>  {
     }
   }
 
-  const tableLoading = () => {
-    return (
-      <div>
-        <Spinner animation="grow" variant="primary" />
-        <Spinner animation="grow" variant="secondary" />
-        <Spinner animation="grow" variant="success" />
-      </div>
-    )
-  }
 
   const displayContent = () => {
     if (!stocks.length && data1) {
@@ -120,7 +112,7 @@ const Performance = props =>  {
           stocks={stocks}
           user={data1}
         />
-      ) : tableLoading()
+      ) : <PageLoading />
     )
 
   }

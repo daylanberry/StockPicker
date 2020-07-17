@@ -17,6 +17,7 @@ const enforce = require('express-sslify')
 mongoose.connect(`mongodb+srv://daylan:${keys.mongoURI}@cluster0-pqujg.mongodb.net/test?retryWrites=true&w=majority`, {useNewUrlParser: true})
 require('./models/Stock.js')
 require('./models/User.js')
+require('./models/News.js')
 require('./services/localSignup.js')
 require('./services/google.js')
 

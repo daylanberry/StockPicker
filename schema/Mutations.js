@@ -1,14 +1,16 @@
 const graphql = require('graphql')
 const userType = require('./types/userType')
 const stockType = require('./types/stockType')
+const newsType = require('./types/newsType')
 const axios = require('axios')
 const { login, googleSignIn, signUp } = require('./strategies.js')
 const mongoose = require('mongoose')
 const User = mongoose.model('User')
 const Stock = mongoose.model('Stock')
+const News = mongoose.model('News')
 const StockSchema = require('../models/Stock')
 
-const { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLFloat } = graphql
+const { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLFloat, GraphQLList } = graphql
 
 
 
@@ -95,6 +97,13 @@ const Mutations = new GraphQLObjectType({
       resolve(parent, { ticker, qty }, req){
         return Stock.sellStock(ticker, qty, req.user._id)
           .catch(err => err)
+      }
+    },
+
+    updateNews: {
+      type: new GraphQLList(newsType),
+      resolve(parent, args, req) {
+        return News.updateNews()
       }
     }
   }

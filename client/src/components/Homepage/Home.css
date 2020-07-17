@@ -1,8 +1,4 @@
 .home-container {
-  margin-top: 20px;
-
-}
-
-.card-img {
-  width: 200px;
+  display: flex;
+  justify-content: column;
 }

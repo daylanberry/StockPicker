@@ -1,0 +1,13 @@
+.read-more {
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.read-more:hover {
+  color: rgb(204, 94, 176);
+}
+
+.art-des {
+  font-size: 14px;
+}
