@@ -11,7 +11,7 @@ const NewsCarousel = ({data: { getNews }}) => {
 
   return (
     <Carousel
-      style={{width: '80%', height: '50%', marginTop: '20px'}}
+      style={{width: '100%', marginTop: '20px'}}
     >
       {
         getNews.map(article => (
@@ -20,7 +20,7 @@ const NewsCarousel = ({data: { getNews }}) => {
             key={article.title}
           >
             <img
-              className="d-block w-100"
+              className="news-img d-block w-100 h-200"
               src={article.urlToImage}
             />
             <Carousel.Caption style={{width: '70%', height: '60%', marginBottom: '40px'}}>
@@ -28,7 +28,6 @@ const NewsCarousel = ({data: { getNews }}) => {
                 style={{backgroundColor: 'black', opacity: '70%'}}
               >
                 <h5>{article.title}</h5>
-                <p className='art-des'>{article.description}</p>
                 <a
                   className='read-more'
                   href={article.url}
@@ -37,6 +36,9 @@ const NewsCarousel = ({data: { getNews }}) => {
                 </a>
               </div>
             </Carousel.Caption>
+            <div>
+              {article.description}
+            </div>
           </Carousel.Item>
           )
         )
