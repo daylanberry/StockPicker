@@ -1,0 +1,9 @@
+.search-recom {
+  display: flex;
+  border-radius: 40px;
+}
+
+.recom-input {
+  border-radius: 40px;
+  margin-left: 10px;
+}

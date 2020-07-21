@@ -7,7 +7,7 @@ import { useMutation, useQuery } from '@apollo/react-hooks';
 import GET_NEWS from '../../queries/getNews'
 import NewsCarousel from './NewsCarousel'
 import PageLoading from '../PageLoading'
-import BuyOrSell from './BuyOrSell'
+import BuyAnalysis from './BuyAnalysis'
 import './Home.css'
 
 
@@ -26,6 +26,11 @@ const Home = (props) => {
 
   }, [])
 
+  const switchTicker = (ticker) => {
+    setCurrentStock(ticker)
+
+  }
+
 
   if (!data || !data.getNews.length) {
     return <PageLoading />
@@ -37,7 +42,10 @@ const Home = (props) => {
         <NewsCarousel data={data}/>
       </div>
       <div style={{width: '50%'}}>
-      <BuyOrSell ticker={currentStock}/>
+      <BuyAnalysis
+        ticker={currentStock}
+        switchTicker={switchTicker}
+      />
       </div>
     </div>
   )

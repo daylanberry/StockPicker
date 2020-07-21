@@ -2,24 +2,54 @@ import React from 'react'
 
 import { Table } from 'react-bootstrap'
 
-const AnalysisTable = (props) => {
-
+const AnalysisTable = ({stock: { buy, hold, sell, strongBuy, strongSell}}) => {
 
   return (
+
     <Table striped bordered hover>
       <tbody>
         <tr>
           <td>
-          1
+            Buy:
           </td>
           <td>
-            3
+            {buy}
           </td>
         </tr>
 
         <tr>
           <td>
-            4
+            Hold:
+          </td>
+          <td>
+            {hold}
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            Sell:
+          </td>
+          <td>
+            {sell}
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            Strong Buy:
+          </td>
+          <td>
+            {strongBuy}
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            Strong Sell:
+          </td>
+          <td>
+            {strongSell}
           </td>
         </tr>
       </tbody>
