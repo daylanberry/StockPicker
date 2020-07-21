@@ -8,3 +8,5 @@ const UPDATE_NEWS = gql`
     }
   }
 `
+
+export default UPDATE_NEWS

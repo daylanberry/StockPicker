@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { finnhub } from '../../api/keys'
 import axios from 'axios'
 
-import { Button } from 'react-bootstrap'
+import { Button, Dropdown } from 'react-bootstrap'
+import PeriodHeader from './PeriodHeader'
 import AnalysisTable from './AnalysisTable'
 import ErrorMessage from '../ErrorMessage'
 import SearchAnalysis from './SearchAnalysis'
@@ -31,17 +32,20 @@ const BuyOrSell = ({ticker, switchTicker}) => {
 
   }, [ticker])
 
+  const changePeriod = (i) => {
+    setCurrentIdx(i)
+  }
+
 
   return (
     <div className='buy-sell-table'>
-      <div className='eval-title'>
-        <h4>
-          {ticker} Evaluation
-        </h4>
-        <span className='period-title'>
-          {stockAnalysis[currentIdx] ? `(${stockAnalysis[currentIdx].period})` : null}
-        </span>
-      </div>
+
+      <PeriodHeader
+        ticker={ticker}
+        stockAnalysis={stockAnalysis}
+        currentIdx={currentIdx}
+        changePeriod={changePeriod}
+      />
 
       <div style={{marginBottom: '10px'}}>
         {

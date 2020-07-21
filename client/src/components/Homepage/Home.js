@@ -10,11 +10,14 @@ import PageLoading from '../PageLoading'
 import BuyAnalysis from './BuyAnalysis'
 import './Home.css'
 
+import UPDATE_NEWS from '../../mutations/updateNews'
+
 
 const Home = (props) => {
 
 
   const { loading, error, data } = useQuery(GET_NEWS)
+  const [updateNews] = useMutation(UPDATE_NEWS)
   const [currentStock, setCurrentStock] = useState('')
 
   useEffect(() => {
@@ -24,6 +27,18 @@ const Home = (props) => {
 
     setCurrentStock(stocksArr[initialStockIdx])
 
+  }, [])
+
+  useEffect(() => {
+    let allowedDays = ['Mon', 'Wed', 'Fri']
+    let currentDate = new Date().toString().split(' ')
+
+    let currentDay = currentDate[0]
+    let currentHour = currentDate[4].split(':')[0]
+
+    if (currentHour === '12' && allowedDays.includes(currentDay)) {
+      updateNews()
+    }
   }, [])
 
   const switchTicker = (ticker) => {
