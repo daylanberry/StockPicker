@@ -19,7 +19,7 @@ const BuyOrSell = ({ticker, switchTicker}) => {
 
   useEffect(() => {
 
-    axios.get(`https://finnhub.io/api/v1/stock/recommendation?symbol=${ticker}&token=brcq3cvrh5rcn6su4hb0`)
+    axios.get(`https://finnhub.io/api/v1/stock/recommendation?symbol=${ticker}&token=${finnhub}`)
       .then(res => {
         if (res.data.length) {
           setError('')
