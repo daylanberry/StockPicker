@@ -127,7 +127,7 @@ class Search extends React.Component {
 
     axios.get(uri)
       .then(res => {
-
+        console.log(res.data)
         if (res.data['Error Message']) {
           this.setState({
             error: 'oops we are not able to fetch this stock!'

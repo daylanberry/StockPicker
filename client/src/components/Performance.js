@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useQuery, useMutation } from '@apollo/react-hooks';
+import { finnhub } from '../api/keys'
 import GET_USER_STOCKS from '../queries/getUserStocks'
 import CURRENT_USER from '../queries/currentUser'
 import ADD_UPDATE_STOCK from '../mutations/addOrUpdateStock'
@@ -66,7 +67,7 @@ const Performance = props =>  {
       let userStocks = data.getUserStock
 
       userStocks.forEach(stock => {
-        updatedStocks.push(getData(`https://finnhub.io/api/v1/quote?symbol=${stock.ticker}&token=brcq3cvrh5rcn6su4hb0`, stock))
+        updatedStocks.push(getData(`https://finnhub.io/api/v1/quote?symbol=${stock.ticker}&token=${finnhub}`, stock))
       })
 
       Promise.all(updatedStocks)
