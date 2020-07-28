@@ -45,7 +45,8 @@ const Performance = props =>  {
         price: currentPrice,
         qty: 0
       }
-      updateStock({variables: stockObj})
+
+      if (!isNaN(currentPrice)) updateStock({variables: stockObj})
 
     })
 
@@ -55,7 +56,13 @@ const Performance = props =>  {
   const getData = (url, stock) => {
     return new Promise((resolve, reject) => {
       axios.get(url)
-        .then((res) => resolve({...stock, currentPrice: res.data.c}))
+        .then((res) => {
+          if (!isNaN(res.data.c)) {
+            resolve({...stock, currentPrice: res.data.c})
+          } else {
+            resolve(stock)
+          }
+        })
     })
   }
 
