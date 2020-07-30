@@ -1,5 +1,5 @@
 # StockPicker
-## Deployed Site: https://stock-simu.herokuapp.com/
+## Deployed Site: https://stock-simu.herokuapp.com/   (Working on Google sign-in on deployed site, functionality works in development)
 
 ## Available Scripts
 
