@@ -24,7 +24,6 @@ passport.use(new GoogleStrategy({
   },
 
   (accessToken, refreshToken, profile, done) => {
-    console.log('hii')
     User.findOne({googleId: profile.id})
       .then(user => {
         if (!user) {
