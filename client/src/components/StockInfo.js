@@ -69,10 +69,12 @@ class StockInfo extends React.Component {
           </Dropdown>
 
           </Card.Title>
+          <div style={{width: '50px'}}>
             <StockStats
               formatNumber={helpers.numberFormatter}
               {...this.props.stock}
             />
+          </div>
 
             <QuoteOrBuy
               price={Number(price)}
