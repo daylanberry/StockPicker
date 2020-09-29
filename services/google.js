@@ -15,6 +15,7 @@ passport.deserializeUser((id, cb) => {
     })
 })
 
+// GraphQL config
 
 passport.use(new GoogleStrategy({
     clientID: keys.googleClientID,
@@ -44,11 +45,4 @@ passport.use(new GoogleStrategy({
   }
 ))
 
-// passport.serializeUser((user, cb) => {
 
-//   cb(null, user)
-// })
-
-// passport.deserializeUser((userObj, cb) => {
-//   cb(null, userObj)
-// })

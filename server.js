@@ -10,6 +10,7 @@ const flash = require('connect-flash')
 const schema = require('./schema/schema.js')
 const session = require('express-session');
 const path = require('path')
+const { googleAuth } = require('./services/google.js')
 
 const compression = require('compression')
 const enforce = require('express-sslify')
@@ -63,6 +64,8 @@ app.use(session({
 
 app.use(passport.initialize())
 app.use(passport.session())
+
+
 require('./routes/auth.js')(app)
 require('./routes/user.js')(app)
 
@@ -77,25 +80,6 @@ app.use('/graphql', expressGraphQL({
 }))
 
 
-
-// function isAuthenticated(req, res, next) {
-//   return req.isAuthenticated() ?
-//     next() :
-//     res.redirect('/auth/google');
-// }
-
-
-
-// const graphqlHTTP = require('express-graphql');
-
-// app.use(
-//   '/graphql',
-//   graphqlHTTP(req => ({
-//     schema,
-//     graphiql: true,
-//     context: req
-//   }))
-// );
 
 const PORT = process.env.PORT || 5010
 app.listen(PORT, () => console.log('Your live on port ' + PORT))
