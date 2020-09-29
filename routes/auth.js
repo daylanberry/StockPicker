@@ -6,15 +6,17 @@ module.exports = (app) => {
   app.get('/auth/google',
     passport.authenticate('google', {
       scope: ['profile', 'email']
-    })
+    }),
+    (req, res) => {
+      console.log('req')
+    }
   )
 
   app.get('/auth/google/callback',
-    passport.authenticate('google'),
-    (req, res) => {
-      console.log('hello there')
-      res.redirect('/')
-    }
+    passport.authenticate('google', {
+      failureRedirect: 'auth/google/failure',
+      successRedirect: '/'
+    })
   )
 
 
