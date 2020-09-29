@@ -6,7 +6,7 @@ const AnalysisTable = ({stock: { buy, hold, sell, strongBuy, strongSell}}) => {
 
   return (
 
-    <Table striped bordered hover>
+    <Table style={{width: '100%'}} striped bordered hover>
       <tbody>
         <tr>
           <td>
