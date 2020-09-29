@@ -52,6 +52,7 @@ const TransactionSummary = ({quote, qty, confirm, handleSubmit, cancelOrder, for
     }
     return (
       <Button
+        style={{marginBotton: '20px'}}
         onClick={handleSubmit}
         className='continue-submit'
         variant={confirm ? "success" : "primary"}
@@ -64,14 +65,17 @@ const TransactionSummary = ({quote, qty, confirm, handleSubmit, cancelOrder, for
 
   return (
     <div className='transaction'>
-      <h4>
-        {
-          confirm ? 'Review and Submit' :
-          'Transaction Summary'
-        }
-      </h4>
+      <div style={{alignItems: 'center', justifyContent: 'center'}}>
+        <h5>
+          {
+            confirm ? 'Review and Submit' :
+            'Transaction Summary'
+          }
+        </h5>
+      </div>
+
       <div className='stock-table'>
-        <Table>
+        <Table style={{width: '50%'}}>
           <tbody>
             <tr>
               <td>Amount:</td>
@@ -80,7 +84,7 @@ const TransactionSummary = ({quote, qty, confirm, handleSubmit, cancelOrder, for
           </tbody>
         </Table>
 
-        <Table>
+        <Table style={{width: '50%'}}>
           <tbody>
             <tr>
               <td>Quantity:</td>
@@ -89,16 +93,16 @@ const TransactionSummary = ({quote, qty, confirm, handleSubmit, cancelOrder, for
           </tbody>
         </Table>
     </div>
-
-
-      <div className='transaction-buttons'>
-        <Button
-          className='cancel-btn'
+      <div className='transaction'>
+        <div className='transaction-buttons'>
+          <Button
           variant="secondary"
+          className='cancel'
           onClick={cancelOrder}
         >
           Cancel
         </Button>
+
         {
           error.length ? <ErrorMessage error={error} /> : continueOrSubmit()
         }
@@ -106,7 +110,10 @@ const TransactionSummary = ({quote, qty, confirm, handleSubmit, cancelOrder, for
         {
           showHoverMsg ? <ErrorMessage error='You must be logged in to do that!'/> : null
         }
+
+        </div>
       </div>
+
     </div>
   )
 }

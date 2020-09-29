@@ -117,7 +117,7 @@ const QuoteOrBuy = ({ price, name, ticker, buy, toggle }) => {
   }
 
   return (
-    <div>
+    <div className='quote-container'>
       <div className='quote-option'>
         {
           successModal ?
@@ -149,6 +149,7 @@ const QuoteOrBuy = ({ price, name, ticker, buy, toggle }) => {
       {
         quotedAmount > 0 || loadingSubmit ?
         <TransactionSummary
+          style={{alignItems: 'center'}}
           quote={quotedAmount}
           qty={qty}
           confirm={confirm}
