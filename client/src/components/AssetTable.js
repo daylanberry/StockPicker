@@ -18,7 +18,7 @@ const AssetTable = ({stocks, user}) => {
   }
 
   return (
-    <Table>
+    <Table style={{width: '100%'}}>
       <thead>
         <tr>
           <th>Symbol</th>
