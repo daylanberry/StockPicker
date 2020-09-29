@@ -1,6 +1,12 @@
 .transaction {
   height: 50px;
   width: 100%;
+  margin-top: 5px;
+}
+
+.transaction-header {
+  display: block;
+  align-items: center;
 }
 
 
