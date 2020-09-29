@@ -18,7 +18,7 @@ const AssetTable = ({stocks, user}) => {
   }
 
   return (
-    <Table>
+    <table>
       <thead>
         <tr>
           <th>Symbol</th>
@@ -61,7 +61,7 @@ const AssetTable = ({stocks, user}) => {
           <td></td>
         </tr>
       </tbody>
-    </Table>
+    </table>
   )
 }
 
